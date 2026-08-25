@@ -1,0 +1,6 @@
+{
+  "name": "Стратег Альянса [tDt] — Last Asylum",
+  "description": "Официальный интерактивный штабной помощник и стратег альянса [tDt] в Last Asylum: Plague. Расписание Дуэли альянсов, калькулятор очков, тактика отрядов и ИИ-советник.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
