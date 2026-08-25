@@ -35,7 +35,7 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
 🎯 Главный фокус: ${currentDay.focus}
 🦅 ЗАДАНИЯ СОКОЛА: ${currentDay.falconRule.title} — ${currentDay.falconRule.description}
 ⛔️ СТРОГИЙ ЗАПРЕТ: ${currentDay.forbiddenActions[0] || "Слив ресурсов не по фазе"}
-📊 Норматив дуэли: 1 000 000 очков на сегодня (суточный)!`;
+📊 Норматив дуэли: МИНИМУМ 1 000 000 очков на сегодня (суточный)!`;
 
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -306,7 +306,7 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
         </div>
         <div className="text-right">
           <span className="text-xs font-mono font-bold text-amber-900 px-2.5 py-1 rounded bg-white border border-amber-200 shadow-2xs">
-            Норматив: 1 000 000 очков на сегодня (суточный)
+            Норматив: МИНИМУМ 1 000 000 очков на сегодня (суточный)
           </span>
         </div>
       </div>

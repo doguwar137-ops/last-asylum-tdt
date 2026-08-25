@@ -255,7 +255,7 @@ export const FalconSimulator: React.FC = () => {
                 Результат в Таблице Дуэли
               </span>
               <span className="text-xs text-amber-700 font-mono font-bold">
-                Норматив: 1 000 000 очков
+                Норматив: МИНИМУМ 1 000 000 очков
               </span>
             </div>
 

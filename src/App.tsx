@@ -142,7 +142,7 @@ export default function App() {
             Альянс {ALLIANCE_NAME} • {GAME_TITLE} • Официальный Штабной Стратег
           </span>
           <span className="text-slate-600">
-            Норматив Дуэли: <strong className="text-amber-700">1 000 000 очков на сегодня (суточный)</strong> • Строго по гайдам
+            Норматив Дуэли: <strong className="text-amber-700">МИНИМУМ 1 000 000 очков на сегодня (суточный)</strong> • Строго по гайдам
           </span>
         </div>
       </footer>

@@ -20,6 +20,7 @@ export const AllianceCodex: React.FC = () => {
     cheese_trap: false,
     naked_squad: false,
     rat_timer: false,
+    caravan_safe: false,
   });
 
   const toggleCheck = (key: string) => {
@@ -124,7 +125,7 @@ export const AllianceCodex: React.FC = () => {
               <Check className="w-3.5 h-3.5" />
             </div>
             <span className="text-slate-800 font-medium">
-              Я обязуюсь закрывать <strong className="text-amber-800 font-bold">суточный норматив 1 000 000 очков</strong> в текущей Дуэли Альянсов.
+              Я обязуюсь закрывать <strong className="text-amber-800 font-bold">суточный норматив МИНИМУМ 1 000 000 очков</strong> в текущей Дуэли Альянсов.
             </span>
           </label>
 
@@ -197,6 +198,24 @@ export const AllianceCodex: React.FC = () => {
             </div>
             <span className="text-slate-800 font-medium">
               Я помню про общий сбор на Битву с Крысой каждый Четверг в 19:30 по МСК.
+            </span>
+          </label>
+
+          <label
+            onClick={() => toggleCheck("caravan_safe")}
+            className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 hover:bg-slate-100/80 cursor-pointer text-xs transition-colors"
+          >
+            <div
+              className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${
+                readinessChecks.caravan_safe
+                  ? "bg-amber-600 border-amber-600 text-white"
+                  : "bg-white border-slate-300 text-transparent"
+              }`}
+            >
+              <Check className="w-3.5 h-3.5" />
+            </div>
+            <span className="text-slate-800 font-medium">
+              Я обязуюсь грабить караваны только на других серверах и поставил галочку <strong className="text-amber-800 font-bold">«Запретить караваны на этом сервере»</strong>.
             </span>
           </label>
         </div>

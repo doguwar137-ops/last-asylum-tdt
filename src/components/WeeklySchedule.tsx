@@ -70,7 +70,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
 
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-bold shadow-2xs">
-            Норматив: 1 000 000 очков на сегодня (суточный)
+            Норматив: МИНИМУМ 1 000 000 очков на сегодня (суточный)
           </span>
         </div>
       </div>

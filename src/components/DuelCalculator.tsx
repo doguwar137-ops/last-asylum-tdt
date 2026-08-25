@@ -79,7 +79,7 @@ export const DuelCalculator: React.FC = () => {
           </div>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
             Рассчитайте ваши очки за неделю. Жесткий норматив альянса — минимум{" "}
-            <strong className="text-amber-700 font-mono font-bold">1 000 000 очков</strong>.
+            <strong className="text-amber-700 font-mono font-bold">МИНИМУМ 1 000 000 очков</strong>.
           </p>
         </div>
 
@@ -174,7 +174,7 @@ export const DuelCalculator: React.FC = () => {
         <div className="flex justify-between text-[10px] font-mono text-slate-500 mt-2 font-medium">
           <span>0 (Старт)</span>
           <span>500k (Половина)</span>
-          <span className="text-amber-700 font-bold">1 000 000 (Порог [tDt])</span>
+          <span className="text-amber-700 font-bold">1 000 000 (Минимальный порог [tDt])</span>
           <span className="text-emerald-700 font-bold">1.5M+ (Топ)</span>
         </div>
       </div>
