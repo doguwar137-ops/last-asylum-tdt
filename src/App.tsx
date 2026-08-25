@@ -13,7 +13,6 @@ import {
   ShieldAlert,
   Radio,
   Flame,
-  Gift,
 } from "lucide-react";
 import { Header } from "./components/Header";
 import { TodayDirective } from "./components/TodayDirective";
@@ -24,7 +23,6 @@ import { DuelCalculator } from "./components/DuelCalculator";
 import { AllianceCodex } from "./components/AllianceCodex";
 import { BroadcastGenerator } from "./components/BroadcastGenerator";
 import { CheeseTrapGuide } from "./components/CheeseTrapGuide";
-import { PromoCodes } from "./components/PromoCodes";
 import { ALLIANCE_NAME, GAME_TITLE } from "./data/allianceData";
 
 export default function App() {
@@ -45,7 +43,6 @@ export default function App() {
     { id: "falcon", label: "Тренажер Сокола", icon: CheckCircle2, highlight: true },
     { id: "calculator", label: "Калькулятор 1М", icon: Calculator },
     { id: "codex", label: "Кодекс & Дисциплина", icon: ShieldAlert, badge: "КИК" },
-    { id: "promo", label: "Промокоды", icon: Gift, badge: "ХАЛЯВА" },
     { id: "broadcast", label: "Штабные Приказы", icon: Radio },
   ];
 
@@ -129,8 +126,6 @@ export default function App() {
         )}
 
         {currentTab === "codex" && <AllianceCodex />}
-
-        {currentTab === "promo" && <PromoCodes />}
 
         {currentTab === "broadcast" && <BroadcastGenerator />}
       </main>

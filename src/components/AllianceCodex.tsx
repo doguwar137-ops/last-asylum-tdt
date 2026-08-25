@@ -10,6 +10,7 @@ import {
   Flame,
   Check,
   Shield,
+  Activity,
 } from "lucide-react";
 import { ALLIANCE_RULES, ALLIANCE_NAME, DUEL_QUOTA } from "../data/allianceData";
 
@@ -21,6 +22,7 @@ export const AllianceCodex: React.FC = () => {
     naked_squad: false,
     rat_timer: false,
     caravan_safe: false,
+    help_limits: false,
   });
 
   const toggleCheck = (key: string) => {
@@ -216,6 +218,24 @@ export const AllianceCodex: React.FC = () => {
             </div>
             <span className="text-slate-800 font-medium">
               Я обязуюсь грабить караваны только на других серверах и поставил галочку <strong className="text-amber-800 font-bold">«Запретить караваны на этом сервере»</strong>.
+            </span>
+          </label>
+
+          <label
+            onClick={() => toggleCheck("help_limits")}
+            className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 hover:bg-slate-100/80 cursor-pointer text-xs transition-colors"
+          >
+            <div
+              className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${
+                readinessChecks.help_limits
+                  ? "bg-amber-600 border-amber-600 text-white"
+                  : "bg-white border-slate-300 text-transparent"
+              }`}
+            >
+              <Check className="w-3.5 h-3.5" />
+            </div>
+            <span className="text-slate-800 font-medium">
+              Я буду помогать согильдийцам и ходить в штурмы даже при исчерпанном лимите наград, чтобы приносить очки дуэли альянсу.
             </span>
           </label>
         </div>

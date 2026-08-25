@@ -74,7 +74,7 @@ export const DuelCalculator: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <Calculator className="w-5 h-5 text-amber-600" />
             <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-              Калькулятор Очков Дуэли [tDt]
+              Калькулятор Очков Дуэли [Dream]
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
@@ -174,7 +174,7 @@ export const DuelCalculator: React.FC = () => {
         <div className="flex justify-between text-[10px] font-mono text-slate-500 mt-2 font-medium">
           <span>0 (Старт)</span>
           <span>500k (Половина)</span>
-          <span className="text-amber-700 font-bold">1 000 000 (Минимальный порог [tDt])</span>
+          <span className="text-amber-700 font-bold">1 000 000 (Минимальный порог [Dream])</span>
           <span className="text-emerald-700 font-bold">1.5M+ (Топ)</span>
         </div>
       </div>
