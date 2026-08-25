@@ -199,7 +199,7 @@ export const AllianceCodex: React.FC = () => {
               <Check className="w-3.5 h-3.5" />
             </div>
             <span className="text-slate-800 font-medium">
-              Я помню про общий сбор на Битву с Крысой каждый Четверг в 19:30 по МСК.
+              Я помню про общий сбор на Битву с Крысой и буду следить за расписанием, объявленным лидерами альянса.
             </span>
           </label>
 

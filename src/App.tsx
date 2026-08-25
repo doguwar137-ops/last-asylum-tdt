@@ -13,6 +13,7 @@ import {
   ShieldAlert,
   Radio,
   Flame,
+  BookOpen,
 } from "lucide-react";
 import { Header } from "./components/Header";
 import { TodayDirective } from "./components/TodayDirective";
@@ -23,6 +24,7 @@ import { DuelCalculator } from "./components/DuelCalculator";
 import { AllianceCodex } from "./components/AllianceCodex";
 import { BroadcastGenerator } from "./components/BroadcastGenerator";
 import { CheeseTrapGuide } from "./components/CheeseTrapGuide";
+import { QuizCheatSheet } from "./components/QuizCheatSheet";
 import { ALLIANCE_NAME, GAME_TITLE } from "./data/allianceData";
 
 export default function App() {
@@ -43,6 +45,7 @@ export default function App() {
     { id: "falcon", label: "Тренажер Сокола", icon: CheckCircle2, highlight: true },
     { id: "calculator", label: "Калькулятор 1М", icon: Calculator },
     { id: "codex", label: "Кодекс & Дисциплина", icon: ShieldAlert, badge: "КИК" },
+    { id: "quiz", label: "Викторина", icon: BookOpen, badge: "ОТВЕТЫ" },
     { id: "broadcast", label: "Штабные Приказы", icon: Radio },
   ];
 
@@ -126,6 +129,8 @@ export default function App() {
         )}
 
         {currentTab === "codex" && <AllianceCodex />}
+        
+        {currentTab === "quiz" && <QuizCheatSheet />}
 
         {currentTab === "broadcast" && <BroadcastGenerator />}
       </main>

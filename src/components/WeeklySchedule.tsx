@@ -64,7 +64,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
-            Жесткое недельное расписание фаз. Сдача Заданий Сокола в профильные дни: Понедельник, Среда и Пятница. В четверг в 19:30 МСК — Битва с Крысой. В субботу — лечение войск, засады UR, бесплатные щиты и закрытие норматива.
+            Жесткое недельное расписание фаз. Сдача Заданий Сокола в профильные дни: Понедельник, Среда и Пятница. Битва с Крысой проходит по расписанию в соответствии с объявлениями лидеров. В субботу — лечение войск, засады UR, бесплатные щиты и закрытие норматива.
           </p>
         </div>
 
@@ -117,7 +117,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                       </span>
                       {day.id === "thursday" && (
                         <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-300 font-bold flex items-center gap-1">
-                          <Flame className="w-3 h-3 text-rose-600" /> 19:30 Крыса
+                          <Flame className="w-3 h-3 text-rose-600" /> Битва с Крысой
                         </span>
                       )}
                     </div>
