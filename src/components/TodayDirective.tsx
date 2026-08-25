@@ -19,14 +19,12 @@ import { DuelDay } from "../types";
 interface TodayDirectiveProps {
   selectedDayIndex: number;
   setSelectedDayIndex: (idx: number) => void;
-  onOpenAiChat: (prompt: string) => void;
   onOpenCalculator: () => void;
 }
 
 export const TodayDirective: React.FC<TodayDirectiveProps> = ({
   selectedDayIndex,
   setSelectedDayIndex,
-  onOpenAiChat,
   onOpenCalculator,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -124,19 +122,6 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
                   <span>Скопировать для чата</span>
                 </>
               )}
-            </button>
-
-            <button
-              id="ask-ai-today-btn"
-              onClick={() =>
-                onOpenAiChat(
-                  `Как бойцу [tDt] максимально эффективно отыграть ${currentDay.name} (${currentDay.phaseName}) и не слить очки?`
-                )
-              }
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-extrabold transition-all shadow-xs"
-            >
-              <Sparkles className="w-4 h-4 text-white" />
-              <span>Спросить тактика</span>
             </button>
           </div>
         </div>

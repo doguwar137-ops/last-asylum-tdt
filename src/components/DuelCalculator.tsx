@@ -13,11 +13,7 @@ import {
 import confetti from "canvas-confetti";
 import { CALCULATOR_CATEGORIES, DUEL_QUOTA, ALLIANCE_NAME } from "../data/allianceData";
 
-interface DuelCalculatorProps {
-  onOpenAiChat: (prompt: string) => void;
-}
-
-export const DuelCalculator: React.FC<DuelCalculatorProps> = ({ onOpenAiChat }) => {
+export const DuelCalculator: React.FC = () => {
   const [inputs, setInputs] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
     CALCULATOR_CATEGORIES.forEach((cat) => {
@@ -237,24 +233,6 @@ export const DuelCalculator: React.FC<DuelCalculatorProps> = ({ onOpenAiChat }) 
             </div>
           );
         })}
-      </div>
-
-      {/* Quick AI Help for calculator */}
-      <div className="p-4 rounded-2xl bg-white border border-slate-200 flex items-center justify-between gap-4 flex-wrap shadow-2xs">
-        <div className="text-xs text-slate-700 font-medium">
-          💡 Не знаете, где добрать недостающие очки? Спросите нашего ИИ-стратега!
-        </div>
-        <button
-          onClick={() =>
-            onOpenAiChat(
-              `У меня сейчас ${totalPoints.toLocaleString()} очков в калькуляторе дуэли. Как мне быстро добрать до 1 000 000 очков без доната?`
-            )
-          }
-          className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-xs transition-all"
-        >
-          <Sparkles className="w-4 h-4 text-white" />
-          <span>Подобрать план очков</span>
-        </button>
       </div>
     </div>
   );

@@ -11,11 +11,9 @@ import {
   CheckCircle2,
   Calculator,
   ShieldAlert,
-  Bot,
   Radio,
   Flame,
-  Clock,
-  Sparkles,
+  Gift,
 } from "lucide-react";
 import { Header } from "./components/Header";
 import { TodayDirective } from "./components/TodayDirective";
@@ -24,9 +22,9 @@ import { HeroTactics } from "./components/HeroTactics";
 import { FalconSimulator } from "./components/FalconSimulator";
 import { DuelCalculator } from "./components/DuelCalculator";
 import { AllianceCodex } from "./components/AllianceCodex";
-import { AiAdvisorChat } from "./components/AiAdvisorChat";
 import { BroadcastGenerator } from "./components/BroadcastGenerator";
 import { CheeseTrapGuide } from "./components/CheeseTrapGuide";
+import { PromoCodes } from "./components/PromoCodes";
 import { ALLIANCE_NAME, GAME_TITLE } from "./data/allianceData";
 
 export default function App() {
@@ -39,13 +37,6 @@ export default function App() {
     return day === 0 ? 6 : day - 1;
   });
 
-  const [aiInitialPrompt, setAiInitialPrompt] = useState<string>("");
-
-  const handleOpenAiChat = (prompt: string) => {
-    setAiInitialPrompt(prompt);
-    setCurrentTab("ai-chat");
-  };
-
   const navTabs = [
     { id: "today", label: "Директива Дня", icon: Shield, badge: "СЕГОДНЯ" },
     { id: "schedule", label: "Календарь (7 Дней)", icon: Calendar },
@@ -54,7 +45,7 @@ export default function App() {
     { id: "falcon", label: "Тренажер Сокола", icon: CheckCircle2, highlight: true },
     { id: "calculator", label: "Калькулятор 1М", icon: Calculator },
     { id: "codex", label: "Кодекс & Дисциплина", icon: ShieldAlert, badge: "КИК" },
-    { id: "ai-chat", label: "ИИ-Советник", icon: Bot, isAi: true },
+    { id: "promo", label: "Промокоды", icon: Gift, badge: "ХАЛЯВА" },
     { id: "broadcast", label: "Штабные Приказы", icon: Radio },
   ];
 
@@ -87,12 +78,10 @@ export default function App() {
                   className={`flex-shrink-0 flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
                     isActive
                       ? "bg-amber-600 text-white shadow-xs scale-[1.01]"
-                      : tab.isAi
-                      ? "bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200"
                       : "bg-slate-100/70 hover:bg-slate-200/80 text-slate-600 hover:text-slate-900 border border-slate-200/60"
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? "text-white" : tab.isAi ? "text-amber-700" : "text-slate-500"}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-500"}`} />
                   <span>{tab.label}</span>
                   {tab.badge && !isActive && (
                     <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-md bg-slate-200 text-slate-700 border border-slate-300">
@@ -112,7 +101,6 @@ export default function App() {
           <TodayDirective
             selectedDayIndex={selectedDayIndex}
             setSelectedDayIndex={setSelectedDayIndex}
-            onOpenAiChat={handleOpenAiChat}
             onOpenCalculator={() => setCurrentTab("calculator")}
           />
         )}
@@ -123,32 +111,26 @@ export default function App() {
               setSelectedDayIndex(idx);
               setCurrentTab("today");
             }}
-            onOpenAiChat={handleOpenAiChat}
           />
         )}
 
         {currentTab === "heroes" && (
-          <HeroTactics onOpenAiChat={handleOpenAiChat} />
+          <HeroTactics />
         )}
 
         {currentTab === "cheese-trap" && (
-          <CheeseTrapGuide onOpenAiChat={handleOpenAiChat} />
+          <CheeseTrapGuide />
         )}
 
         {currentTab === "falcon" && <FalconSimulator />}
 
         {currentTab === "calculator" && (
-          <DuelCalculator onOpenAiChat={handleOpenAiChat} />
+          <DuelCalculator />
         )}
 
         {currentTab === "codex" && <AllianceCodex />}
 
-        {currentTab === "ai-chat" && (
-          <AiAdvisorChat
-            initialPrompt={aiInitialPrompt}
-            onClearInitialPrompt={() => setAiInitialPrompt("")}
-          />
-        )}
+        {currentTab === "promo" && <PromoCodes />}
 
         {currentTab === "broadcast" && <BroadcastGenerator />}
       </main>

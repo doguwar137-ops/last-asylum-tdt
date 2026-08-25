@@ -20,7 +20,6 @@ import { DuelDay } from "../types";
 
 interface WeeklyScheduleProps {
   onSelectDay: (idx: number) => void;
-  onOpenAiChat: (prompt: string) => void;
 }
 
 const getPhaseIcon = (iconName: string) => {
@@ -46,7 +45,6 @@ const getPhaseIcon = (iconName: string) => {
 
 export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
   onSelectDay,
-  onOpenAiChat,
 }) => {
   const [expandedDay, setExpandedDay] = useState<string | null>("wednesday");
 
@@ -231,16 +229,6 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                         className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold border border-slate-300 transition-colors shadow-2xs"
                       >
                         Перейти в директиву дня
-                      </button>
-                      <button
-                        onClick={() =>
-                          onOpenAiChat(
-                            `Расскажи подробный гайд для ${day.name} в дуэли альянсов [tDt]. Как подготовиться и не ошибиться?`
-                          )
-                        }
-                        className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-extrabold flex items-center gap-1.5 transition-colors shadow-2xs"
-                      >
-                        <Sparkles className="w-3.5 h-3.5" /> Совет ИИ
                       </button>
                     </div>
                   </div>

@@ -14,11 +14,7 @@ import {
 import { FIRST_SQUAD_HEROES } from "../data/allianceData";
 import { HeroInfo } from "../types";
 
-interface HeroTacticsProps {
-  onOpenAiChat: (prompt: string) => void;
-}
-
-export const HeroTactics: React.FC<HeroTacticsProps> = ({ onOpenAiChat }) => {
+export const HeroTactics: React.FC = () => {
   const [selectedHero, setSelectedHero] = useState<HeroInfo>(FIRST_SQUAD_HEROES[0]);
 
   return (
@@ -36,18 +32,6 @@ export const HeroTactics: React.FC<HeroTacticsProps> = ({ onOpenAiChat }) => {
             100% инвестиций — в Главный Ударный Отряд. Количество слотов марша растет с уровнем базы, но все боевые ресурсы, опыт и экипировка UR идут строго в один ударный кулак. Остальные отряды — сборщики ресурсов.
           </p>
         </div>
-
-        <button
-          onClick={() =>
-            onOpenAiChat(
-              "Как правильно распределить банки опыта и осколки между ключевыми героями (Марлена, Зоя, Харпер, Артур, Даскал) по гайду альянса?"
-            )
-          }
-          className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-xs transition-all"
-        >
-          <Sparkles className="w-4 h-4 text-white" />
-          <span>Спросить совет по героям</span>
-        </button>
       </div>
 
       {/* Myth Buster Alert Card */}

@@ -91,8 +91,6 @@ const PRESET_BROADCASTS = [
 export const BroadcastGenerator: React.FC = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(PRESET_BROADCASTS[0]);
   const [broadcastText, setBroadcastText] = useState(PRESET_BROADCASTS[0].text);
-  const [customTopic, setCustomTopic] = useState("");
-  const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const handleSelectTemplate = (tpl: typeof PRESET_BROADCASTS[0]) => {
@@ -104,28 +102,6 @@ export const BroadcastGenerator: React.FC = () => {
     navigator.clipboard.writeText(broadcastText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
-  };
-
-  const handleGenerateAiBroadcast = async () => {
-    setIsGenerating(true);
-    try {
-      const response = await fetch("/api/generate-announcement", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phaseDay: selectedTemplate.id,
-          customTopic: customTopic.trim() || undefined,
-        }),
-      });
-      const data = await response.json();
-      if (data.announcement) {
-        setBroadcastText(data.announcement);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsGenerating(false);
-    }
   };
 
   return (
@@ -215,30 +191,8 @@ export const BroadcastGenerator: React.FC = () => {
             />
           </div>
 
-          {/* AI Generator Footer */}
+          {/* Footer */}
           <div className="pt-4 border-t border-slate-100 space-y-3">
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={customTopic}
-                onChange={(e) => setCustomTopic(e.target.value)}
-                placeholder="Дополнительный акцент (например: сбор на сырный ивент в 20:00)..."
-                className="flex-1 bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-500"
-              />
-              <button
-                onClick={handleGenerateAiBroadcast}
-                disabled={isGenerating}
-                className="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold text-xs flex items-center gap-1.5 border border-amber-200 transition-colors"
-              >
-                {isGenerating ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-amber-600" />
-                ) : (
-                  <Sparkles className="w-4 h-4 text-amber-600" />
-                )}
-                <span>ИИ-Усиление</span>
-              </button>
-            </div>
-
             <div className="flex items-center justify-between text-xs text-slate-500">
               <span>Готово для отправки в игровой чат [tDt]</span>
               <button

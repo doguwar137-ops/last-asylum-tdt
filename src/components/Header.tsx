@@ -107,15 +107,6 @@ export const Header: React.FC<HeaderProps> = ({
               <Clock className="w-4 h-4 text-amber-600" />
               <span>{mskTime || "12:00:00 МСК"}</span>
             </div>
-
-            <button
-              id="ai-quick-btn"
-              onClick={() => setCurrentTab("ai-chat")}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs transition-all shadow-xs"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-white" />
-              ИИ-Советник
-            </button>
           </div>
         </div>
       </div>

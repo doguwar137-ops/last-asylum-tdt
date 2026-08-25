@@ -12,11 +12,7 @@ import {
 } from "lucide-react";
 import { ALLIANCE_NAME } from "../data/allianceData";
 
-interface CheeseTrapGuideProps {
-  onOpenAiChat?: (prompt: string) => void;
-}
-
-export const CheeseTrapGuide: React.FC<CheeseTrapGuideProps> = ({ onOpenAiChat }) => {
+export const CheeseTrapGuide: React.FC = () => {
   return (
     <div id="cheese-trap-guide-container" className="space-y-6">
       {/* Header Banner */}
@@ -32,20 +28,6 @@ export const CheeseTrapGuide: React.FC<CheeseTrapGuideProps> = ({ onOpenAiChat }
             Событие «Сырная ловушка» может проходить в любой день недели независимо от фаз Дуэли. Соблюдайте строгий протокол участия для максимизации наград альянса и экономии войск.
           </p>
         </div>
-
-        {onOpenAiChat && (
-          <button
-            onClick={() =>
-              onOpenAiChat(
-                "Как правильно участвовать в Сырной ловушке по регламенту альянса? Напомни правила создания и входа в ралли."
-              )
-            }
-            className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-xs transition-all"
-          >
-            <Sparkles className="w-4 h-4 text-white" />
-            <span>Спросить тактика про Ловушку</span>
-          </button>
-        )}
       </div>
 
       {/* 4 Golden Rules Grid */}
