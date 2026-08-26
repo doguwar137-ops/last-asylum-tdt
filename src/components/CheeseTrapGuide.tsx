@@ -21,7 +21,7 @@ export const CheeseTrapGuide: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <Target className="w-5 h-5 text-amber-600" />
             <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-              Гайд: Стратегия «Сырной Ловушки» [{ALLIANCE_NAME}]
+              Гайд: Стратегия «Сырной Ловушки» {ALLIANCE_NAME}
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
