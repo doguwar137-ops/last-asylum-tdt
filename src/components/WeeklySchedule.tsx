@@ -14,6 +14,8 @@ import {
   ShieldAlert,
   Swords,
   Compass,
+  Copy,
+  Check,
 } from "lucide-react";
 import { DUEL_DAYS } from "../data/allianceData";
 import { DuelDay } from "../types";
@@ -47,9 +49,23 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
   onSelectDay,
 }) => {
   const [expandedDay, setExpandedDay] = useState<string | null>("wednesday");
+  const [copiedDayId, setCopiedDayId] = useState<string | null>(null);
 
   const toggleExpand = (id: string) => {
     setExpandedDay(expandedDay === id ? null : id);
+  };
+
+  const handleCopyDay = (day: DuelDay) => {
+    const text = `📢 [Dream] БОЕВОЙ ПРИКАЗ: ${day.name.toUpperCase()} (${day.phaseName})
+🎯 Главный фокус: ${day.focus}
+🦅 ПРАВИЛО СОКОЛА: ${day.falconRule.title} — ${day.falconRule.description}
+⛔️ СТРОГИЙ ЗАПРЕТ:
+✕ ${day.forbiddenActions.join("\n✕ ")}
+📊 Норматив дуэли: МИНИМУМ 1 000 000 очков на сегодня (суточный)!`;
+
+    navigator.clipboard.writeText(text);
+    setCopiedDayId(day.id);
+    setTimeout(() => setCopiedDayId(null), 2500);
   };
 
   return (
@@ -219,6 +235,22 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                     </div>
 
                     <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleCopyDay(day)}
+                        className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300 transition-colors shadow-2xs flex items-center gap-1.5 cursor-pointer"
+                      >
+                        {copiedDayId === day.id ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="text-emerald-700">Скопировано!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5 text-slate-500" />
+                            <span>Скопировать для чата</span>
+                          </>
+                        )}
+                      </button>
                       <button
                         onClick={() => onSelectDay(idx)}
                         className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold border border-slate-300 transition-colors shadow-2xs"

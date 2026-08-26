@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, BookOpen, Lightbulb } from "lucide-react";
+import { Search, BookOpen, Lightbulb, Copy, Check } from "lucide-react";
 
 const QUIZ_QUESTIONS = [
   { q: "Как повысить мощность отряда после неудачной экспедиции?", a: "Оба варианта" },
@@ -56,6 +56,14 @@ const QUIZ_QUESTIONS = [
 
 export function QuizCheatSheet() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  const handleCopy = (q: string, a: string, index: number) => {
+    const text = `❓ Вопрос: ${q}\n✅ Ответ: ${a}`;
+    navigator.clipboard.writeText(text);
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  };
 
   const filteredQuestions = QUIZ_QUESTIONS.filter(
     (item) =>
@@ -75,7 +83,7 @@ export function QuizCheatSheet() {
               Шпаргалка по викторине
             </h2>
             <p className="text-sm text-slate-600">
-              База правильных ответов на вопросы игровой викторины
+              База правильных ответов на вопросы игровой викторины (нажмите на иконку копирования, чтобы поделиться в чате)
             </p>
           </div>
         </div>
@@ -97,13 +105,24 @@ export function QuizCheatSheet() {
           filteredQuestions.map((item, index) => (
             <div
               key={index}
-              className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs hover:shadow-md transition-shadow flex flex-col justify-between"
+              className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs hover:shadow-md transition-shadow flex flex-col justify-between relative group"
             >
-              <div className="mb-4">
-                <h3 className="text-sm font-bold text-slate-800 leading-snug mb-3">
+              <div className="mb-4 pr-6">
+                <h3 className="text-sm font-bold text-slate-800 leading-snug">
                   {item.q}
                 </h3>
               </div>
+              <button
+                onClick={() => handleCopy(item.q, item.a, index)}
+                className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-purple-600 hover:bg-purple-50 transition-colors"
+                title="Скопировать для чата"
+              >
+                {copiedIndex === index ? (
+                  <Check className="w-4 h-4 text-emerald-600" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
+              </button>
               <div className="bg-purple-50 rounded-xl p-3 border border-purple-100 mt-auto flex items-start gap-2">
                 <Lightbulb className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
                 <div>

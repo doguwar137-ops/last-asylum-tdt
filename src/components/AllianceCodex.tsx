@@ -11,10 +11,12 @@ import {
   Check,
   Shield,
   Activity,
+  Copy,
 } from "lucide-react";
 import { ALLIANCE_RULES, ALLIANCE_NAME, DUEL_QUOTA } from "../data/allianceData";
 
 export const AllianceCodex: React.FC = () => {
+  const [copiedRuleId, setCopiedRuleId] = useState<string | null>(null);
   const [readinessChecks, setReadinessChecks] = useState<Record<string, boolean>>({
     quota_understood: true,
     falcon_lock: true,
@@ -24,6 +26,15 @@ export const AllianceCodex: React.FC = () => {
     caravan_safe: false,
     help_limits: false,
   });
+
+  const handleCopyRule = (rule: any) => {
+    const text = `📢 [Dream] ПРАВИЛО АЛЬЯНСА: ${rule.title.toUpperCase()} (${rule.badge})
+🎯 Суть: ${rule.summary}
+ℹ️ Подробности: ${rule.details}`;
+    navigator.clipboard.writeText(text);
+    setCopiedRuleId(rule.id);
+    setTimeout(() => setCopiedRuleId(null), 2500);
+  };
 
   const toggleCheck = (key: string) => {
     setReadinessChecks((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -87,9 +98,27 @@ export const AllianceCodex: React.FC = () => {
               <p className="text-xs text-amber-800 font-semibold mt-1">
                 {rule.summary}
               </p>
-              <p className="text-xs text-slate-600 mt-2 leading-relaxed border-t border-slate-100 pt-2">
+              <p className="text-xs text-slate-600 mt-2 leading-relaxed border-t border-slate-100 pt-2 mb-4">
                 {rule.details}
               </p>
+              <div className="flex items-center justify-end">
+                <button
+                  onClick={() => handleCopyRule(rule)}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 transition-all shadow-2xs hover:shadow-xs cursor-pointer"
+                >
+                  {copiedRuleId === rule.id ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="text-emerald-700">Скопировано!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-slate-400" />
+                      <span>Скопировать для чата</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           );
         })}
@@ -163,7 +192,7 @@ export const AllianceCodex: React.FC = () => {
               <Check className="w-3.5 h-3.5" />
             </div>
             <span className="text-slate-800 font-medium">
-              Я соблюдаю правила Сырной Ловушки: создаю ралли одним слабым героем, захожу основой и останавливаюсь при капе наград.
+              Я соблюдаю правила Сырной Ловушки: создаю сборы одним слабым героем, захожу основой в штурмы соклановцев и останавливаюсь при капе наград.
             </span>
           </label>
 

@@ -39,15 +39,15 @@ export const CheeseTrapGuide: React.FC = () => {
               01
             </div>
             <h3 className="text-base font-bold text-slate-900">
-              Создание ралли: Только слабый герой
+              Создание сборов: Только слабый герой
             </h3>
           </div>
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            При запуске ралли на Сырную ловушку отправляйте <strong className="text-rose-700">ТОЛЬКО ОДНОГО слабого героя</strong> (синего или фиолетового качества, 1 уровня).
+            При запуске сбора на Сырную ловушку отправляйте <strong className="text-rose-700">ТОЛЬКО ОДНОГО слабого героя</strong> (синего или фиолетового качества, 1 уровня).
           </p>
           <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2">
             <XCircle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-            <span>Категорически запрещено запускать ралли основным ударным составом! Вы блокируете слот вместимости для соклановцев.</span>
+            <span>Категорически запрещено запускать сборы основным ударным составом! Вы блокируете слот вместимости для соклановцев.</span>
           </div>
         </div>
 
@@ -58,11 +58,11 @@ export const CheeseTrapGuide: React.FC = () => {
               02
             </div>
             <h3 className="text-base font-bold text-slate-900">
-              Участие в ралли: Только основной состав
+              Участие в штурмах: Только основной состав
             </h3>
           </div>
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            Присоединяйтесь к чужим ралли соклановцев <strong className="text-emerald-700">ТОЛЬКО своим основным боевым составом (1-й ударный отряд)</strong> с максимальным уроном.
+            Присоединяйтесь к штурмам соклановцев <strong className="text-emerald-700">ТОЛЬКО своим основным боевым составом (1-м ударным отрядом)</strong> с максимальным уроном.
           </p>
           <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-start gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
