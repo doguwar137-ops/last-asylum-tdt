@@ -115,11 +115,6 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                       <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200 font-medium">
                         {day.badge}
                       </span>
-                      {day.id === "thursday" && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-300 font-bold flex items-center gap-1">
-                          <Flame className="w-3 h-3 text-rose-600" /> Битва с Крысой
-                        </span>
-                      )}
                     </div>
                     <p className="text-xs text-slate-600 mt-0.5 truncate max-w-xl">
                       {day.focus}
