@@ -22,7 +22,6 @@ export const AllianceCodex: React.FC = () => {
     falcon_lock: true,
     cheese_trap: false,
     naked_squad: false,
-    rat_timer: false,
     caravan_safe: false,
     help_limits: false,
   });
@@ -211,24 +210,6 @@ export const AllianceCodex: React.FC = () => {
             </div>
             <span className="text-slate-800 font-medium">
               Я держу 100% фокус ресурсов на 1-м ударном отряде, а остальные слоты маршей использую только для сбора ресурсов на карте.
-            </span>
-          </label>
-
-          <label
-            onClick={() => toggleCheck("rat_timer")}
-            className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 hover:bg-slate-100/80 cursor-pointer text-xs transition-colors"
-          >
-            <div
-              className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${
-                readinessChecks.rat_timer
-                  ? "bg-amber-600 border-amber-600 text-white"
-                  : "bg-white border-slate-300 text-transparent"
-              }`}
-            >
-              <Check className="w-3.5 h-3.5" />
-            </div>
-            <span className="text-slate-800 font-medium">
-              Я помню про общий сбор на Битву с Крысой и буду следить за расписанием, объявленным лидерами альянса.
             </span>
           </label>
 
