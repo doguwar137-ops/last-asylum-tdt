@@ -95,7 +95,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
   };
 
   const handleCopyWeeklyPlanChat = () => {
-    const planText = `[Dream] Неделя: Пн-Тех/Сокол | Вт-Стройка | Ср-Наука/Сокол | Чт-Герои | Пт-Войска/Сокол | Сб-Лечение | Вс-Копилка. Норма 1M!`;
+    const planText = `[Dream] Неделя: Пн-Тех/Сокол | Вт-Стройка | Ср-Наука/Сокол | Чт-Герои | Пт-Войска/Сокол | Сб-Лечение | Вс-Копилка. Норма минимум 1M в день!`;
     navigator.clipboard.writeText(planText);
     setCopiedPlanChat(true);
     setTimeout(() => setCopiedPlanChat(false), 2500);
