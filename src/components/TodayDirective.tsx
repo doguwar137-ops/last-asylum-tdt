@@ -27,7 +27,8 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
   setSelectedDayIndex,
   onOpenCalculator,
 }) => {
-  const [copied, setCopied] = useState(false);
+  const [copiedMail, setCopiedMail] = useState(false);
+  const [copiedChat, setCopiedChat] = useState(false);
   const currentDay: DuelDay = DUEL_DAYS[selectedDayIndex] || DUEL_DAYS[0];
 
   const handleCopyOrder = () => {
@@ -38,8 +39,15 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
 📊 Норматив дуэли: МИНИМУМ 1 000 000 очков на сегодня (суточный)!`;
 
     navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+    setCopiedMail(true);
+    setTimeout(() => setCopiedMail(false), 2500);
+  };
+
+  const handleCopyOrderChat = () => {
+    const text = currentDay.shortChatTemplate || `[Dream] ${currentDay.name}: ${currentDay.focus}. Норма: минимум 1M очков.`;
+    navigator.clipboard.writeText(text);
+    setCopiedChat(true);
+    setTimeout(() => setCopiedChat(false), 2500);
   };
 
   const isFalconClaimDay =
@@ -101,9 +109,9 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
             <button
               id="copy-order-btn"
               onClick={handleCopyOrder}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300 transition-colors shadow-2xs"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300 transition-colors shadow-2xs cursor-pointer"
             >
-              {copied ? (
+              {copiedMail ? (
                 <>
                   <Check className="w-4 h-4 text-emerald-600" />
                   <span className="text-emerald-700 font-bold">Приказ скопирован!</span>
@@ -111,7 +119,24 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
               ) : (
                 <>
                   <Copy className="w-4 h-4 text-slate-500" />
-                  <span>Скопировать для почты альянса</span>
+                  <span>Скопировать для почты Альянса</span>
+                </>
+              )}
+            </button>
+            <button
+              id="copy-order-chat-btn"
+              onClick={handleCopyOrderChat}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold border border-slate-300 transition-colors shadow-2xs cursor-pointer"
+            >
+              {copiedChat ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span className="text-emerald-700 font-bold">В чат скопировано!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 text-slate-500" />
+                  <span>Скопировать для чата</span>
                 </>
               )}
             </button>

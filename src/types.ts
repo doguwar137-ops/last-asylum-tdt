@@ -27,6 +27,7 @@ export interface DuelDay {
     targetDay: string;
     description: string;
   }[];
+  shortChatTemplate?: string;
 }
 
 export interface HeroInfo {

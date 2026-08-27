@@ -49,8 +49,10 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
   onSelectDay,
 }) => {
   const [expandedDay, setExpandedDay] = useState<string | null>("wednesday");
-  const [copiedDayId, setCopiedDayId] = useState<string | null>(null);
-  const [copiedPlan, setCopiedPlan] = useState<boolean>(false);
+  const [copiedDayMailId, setCopiedDayMailId] = useState<string | null>(null);
+  const [copiedDayChatId, setCopiedDayChatId] = useState<string | null>(null);
+  const [copiedPlanMail, setCopiedPlanMail] = useState<boolean>(false);
+  const [copiedPlanChat, setCopiedPlanChat] = useState<boolean>(false);
 
   const toggleExpand = (id: string) => {
     setExpandedDay(expandedDay === id ? null : id);
@@ -65,24 +67,38 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
 📊 Норматив дуэли: МИНИМУМ 1 000 000 очков на сегодня (суточный)!`;
 
     navigator.clipboard.writeText(text);
-    setCopiedDayId(day.id);
-    setTimeout(() => setCopiedDayId(null), 2500);
+    setCopiedDayMailId(day.id);
+    setTimeout(() => setCopiedDayMailId(null), 2500);
+  };
+
+  const handleCopyDayChat = (day: DuelDay) => {
+    const text = day.shortChatTemplate || `[Dream] ${day.name}: ${day.focus}. Норма: минимум 1M очков.`;
+    navigator.clipboard.writeText(text);
+    setCopiedDayChatId(day.id);
+    setTimeout(() => setCopiedDayChatId(null), 2500);
   };
 
   const handleCopyWeeklyPlan = () => {
     const planText = `📢 [Dream] ПЛАН СБРОСА РЕСУРСОВ НА НЕДЕЛЮ (ДУЭЛЬ):
 📅 День 1 (Пн): Технологии & Сокол — Сдача Сокола. Улучшаем технологии и Ворона. Копим сундуки до Ср, опыт до Чт, войска до Пт.
-📅 День 2 (Вт): Стройка — Качаем здания, призыв выживших. Отправка только золотых (UR) караванов/миссий. Строительные ускоры — строго в крайнем случае! Сокола копим.
-📅 День 3 (Ср): Наука & Сокол — Сдача Сокола со Вт. Научные ускоры, свитки, Сундуки Ворона. Нового Сокола копим на Пт!
+📅 День 2 (Вт): Стройка — Качаем здания, призыв выживших. Отправка только золотых (UR) караванов/миссий. Строительные ускорения — строго в крайнем случае! Сокола копим.
+📅 День 3 (Ср): Наука & Сокол — Сдача Сокола со Вт. Научные исследования, свитки, Сундуки Ворона. Нового Сокола копим на Пт!
 📅 День 4 (Чт): Герои — Призыв, прокачка уровня/звезд осколками СТРОГО 1-го отряда. Сокола копим на Пт!
-📅 День 5 (Пт): Войска & Сокол — Сдача всего накопленного Сокола со Ср/Чт. Тренировка войск, плоды Ворона. Оставьте универсальные ускоры на Сб!
-📅 День 6 (Суббота): Лечение & Операции — Лечение, засады UR, караваны врагов. Слив остатков ускоров до нормы 1M. Щит обязательно!
+📅 День 5 (Пт): Войска & Сокол — Сдача всего накопленного Сокола со Ср/Чт. Тренировка войск, плоды Ворона. Оставьте универсальные ускорения на Сб!
+📅 День 6 (Суббота): Лечение & Операции — Лечение, засады UR, караваны врагов. Слив остатков ускорений до нормы 1M. Щит обязательно!
 📅 День 7 (Вс): Копилка — СТРОГИЙ стоп по всем тратам! Полный режим сбережения ресурсов и ускорителей на новую неделю.
 🛡️ Норматив: минимум 1 000 000 очков в день! ШТАБ [Dream]`;
 
     navigator.clipboard.writeText(planText);
-    setCopiedPlan(true);
-    setTimeout(() => setCopiedPlan(false), 2500);
+    setCopiedPlanMail(true);
+    setTimeout(() => setCopiedPlanMail(false), 2500);
+  };
+
+  const handleCopyWeeklyPlanChat = () => {
+    const planText = `[Dream] Неделя: Пн-Тех/Сокол | Вт-Стройка | Ср-Наука/Сокол | Чт-Герои | Пт-Войска/Сокол | Сб-Лечение | Вс-Копилка. Норма 1M!`;
+    navigator.clipboard.writeText(planText);
+    setCopiedPlanChat(true);
+    setTimeout(() => setCopiedPlanChat(false), 2500);
   };
 
   return (
@@ -106,7 +122,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
             onClick={handleCopyWeeklyPlan}
             className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer border border-amber-600"
           >
-            {copiedPlan ? (
+            {copiedPlanMail ? (
               <>
                 <Check className="w-4 h-4 text-white animate-in zoom-in-50 duration-200" />
                 <span>План скопирован!</span>
@@ -114,7 +130,23 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
             ) : (
               <>
                 <Copy className="w-4 h-4 text-white" />
-                <span>Скопировать план на неделю (для почты Альянса)</span>
+                <span>Скопировать для почты Альянса</span>
+              </>
+            )}
+          </button>
+          <button
+            onClick={handleCopyWeeklyPlanChat}
+            className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer border border-slate-300"
+          >
+            {copiedPlanChat ? (
+              <>
+                <Check className="w-4 h-4 text-emerald-600 animate-in zoom-in-50 duration-200" />
+                <span className="text-emerald-700">Скопировано в чат!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-4 h-4 text-slate-500" />
+                <span>Скопировать для чата</span>
               </>
             )}
           </button>
@@ -296,7 +328,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                         onClick={() => handleCopyDay(day)}
                         className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300 transition-colors shadow-2xs flex items-center gap-1.5 cursor-pointer"
                       >
-                        {copiedDayId === day.id ? (
+                        {copiedDayMailId === day.id ? (
                           <>
                             <Check className="w-3.5 h-3.5 text-emerald-600" />
                             <span className="text-emerald-700">Скопировано!</span>
@@ -304,7 +336,23 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                         ) : (
                           <>
                             <Copy className="w-3.5 h-3.5 text-slate-500" />
-                            <span>Скопировать для почты альянса</span>
+                            <span>Скопировать для почты Альянса</span>
+                          </>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => handleCopyDayChat(day)}
+                        className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold border border-slate-300 transition-colors shadow-2xs flex items-center gap-1.5 cursor-pointer"
+                      >
+                        {copiedDayChatId === day.id ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="text-emerald-700">В чат скопировано!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5 text-slate-500" />
+                            <span>Скопировать для чата</span>
                           </>
                         )}
                       </button>
