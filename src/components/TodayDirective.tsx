@@ -31,7 +31,7 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
   const currentDay: DuelDay = DUEL_DAYS[selectedDayIndex] || DUEL_DAYS[0];
 
   const handleCopyOrder = () => {
-    const text = `📢 [tDt] БОЕВОЙ ПРИКАЗ: ${currentDay.name.toUpperCase()} (${currentDay.phaseName})
+    const text = `📢 ${ALLIANCE_NAME} БОЕВОЙ ПРИКАЗ: ${currentDay.name.toUpperCase()} (${currentDay.phaseName})
 🎯 Главный фокус: ${currentDay.focus}
 🦅 ЗАДАНИЯ СОКОЛА: ${currentDay.falconRule.title} — ${currentDay.falconRule.description}
 ⛔️ СТРОГИЙ ЗАПРЕТ: ${currentDay.forbiddenActions[0] || "Слив ресурсов не по фазе"}
@@ -219,6 +219,30 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
             </ul>
           </div>
         </div>
+
+        {/* Accumulation Mode Block */}
+        {currentDay.accumulation && currentDay.accumulation.length > 0 && (
+          <div className="mt-4 p-4 rounded-xl bg-amber-50/60 border border-amber-200 text-xs">
+            <div className="font-bold text-amber-800 mb-2 flex items-center gap-1.5">
+              <Lock className="w-3.5 h-3.5 text-amber-600" />
+              <span>Накопительный режим — Что мы копим сегодня:</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 mt-1">
+              {currentDay.accumulation.map((item, i) => (
+                <div key={i} className="bg-white p-2.5 rounded-lg border border-amber-100 flex flex-col justify-between shadow-3xs">
+                  <div>
+                    <span className="font-semibold text-slate-800 block">{item.item}</span>
+                    <span className="text-[11px] text-slate-600 mt-0.5 block">{item.description}</span>
+                  </div>
+                  <div className="mt-2.5 flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-100/60 px-2 py-0.5 rounded-md w-fit">
+                    <span className="uppercase font-mono text-[9px] text-amber-900 opacity-80">Понадобится:</span>
+                    <span>{item.targetDay}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Points Opportunities & Pro Tips */}
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">

@@ -17,7 +17,7 @@ import {
   Copy,
   Check,
 } from "lucide-react";
-import { DUEL_DAYS } from "../data/allianceData";
+import { DUEL_DAYS, ALLIANCE_NAME } from "../data/allianceData";
 import { DuelDay } from "../types";
 
 interface WeeklyScheduleProps {
@@ -50,6 +50,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
 }) => {
   const [expandedDay, setExpandedDay] = useState<string | null>("wednesday");
   const [copiedDayId, setCopiedDayId] = useState<string | null>(null);
+  const [copiedPlan, setCopiedPlan] = useState<boolean>(false);
 
   const toggleExpand = (id: string) => {
     setExpandedDay(expandedDay === id ? null : id);
@@ -68,15 +69,33 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
     setTimeout(() => setCopiedDayId(null), 2500);
   };
 
+  const handleCopyWeeklyPlan = () => {
+    const planText = `📢 [Dream] ПЛАН СБРОСА РЕСУРСОВ НА НЕДЕЛЮ (ДУЭЛЬ):
+
+📅 День 1 (Пн): Технологии & Сокол — Сдача Сокола. Улучшаем технологии и Ворона. Копим сундуки до Ср, опыт до Чт, войска до Пт.
+📅 День 2 (Вт): Стройка — Качаем здания, призыв выживших. Отправка только золотых (UR) караванов/миссий. Строительные ускоры — строго в крайнем случае! Сокола копим.
+📅 День 3 (Ср): Наука & Сокол — Сдача Сокола со Вт. Научные ускоры, свитки, Сундуки Ворона. Нового Сокола копим на Пт!
+📅 День 4 (Чт): Герои — Призыв, прокачка уровня/звезд осколками СТРОГО 1-го отряда. Сокола копим на Пт!
+📅 День 5 (Пт): Войска & Сокол — Сдача всего накопленного Сокола со Ср/Чт. Тренировка войск, плоды Ворона. Оставьте универсальные ускоры на Сб!
+📅 День 6 (Суббота): Лечение & Операции — Лечение, засады UR, караваны врагов. Слив остатков ускоров до нормы 1M. Щит обязательно!
+📅 День 7 (Вс): Копилка — СТРОГИЙ стоп по всем тратам! Полный режим сбережения ресурсов и ускорителей на новую неделю.
+
+🛡️ Норматив дуэли: МИНИМУМ 1 000 000 очков ЕЖЕДНЕВНО! С уважением, штаб [Dream].`;
+
+    navigator.clipboard.writeText(planText);
+    setCopiedPlan(true);
+    setTimeout(() => setCopiedPlan(false), 2500);
+  };
+
   return (
     <div id="weekly-schedule-container" className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
+      <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 shadow-2xs">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Calendar className="w-5 h-5 text-amber-600" />
             <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-              Недельный Боевой Календарь Дуэли [tDt]
+              Недельный Боевой Календарь Дуэли {ALLIANCE_NAME}
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
@@ -84,9 +103,25 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-mono px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-bold shadow-2xs">
-            Норматив: МИНИМУМ 1 000 000 очков на сегодня (суточный)
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 flex-shrink-0 w-full lg:w-auto">
+          <button
+            onClick={handleCopyWeeklyPlan}
+            className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer border border-amber-600"
+          >
+            {copiedPlan ? (
+              <>
+                <Check className="w-4 h-4 text-white animate-in zoom-in-50 duration-200" />
+                <span>План скопирован!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-4 h-4 text-white" />
+                <span>Скопировать план на неделю</span>
+              </>
+            )}
+          </button>
+          <span className="text-xs font-mono px-3 py-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-bold shadow-2xs text-center">
+            Норматив: МИНИМУМ 1 000 000 очков
           </span>
         </div>
       </div>
@@ -226,6 +261,30 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                       </ul>
                     </div>
                   </div>
+
+                  {/* Accumulation Mode Block */}
+                  {day.accumulation && day.accumulation.length > 0 && (
+                    <div className="p-3.5 rounded-xl bg-amber-50/60 border border-amber-200 text-xs">
+                      <div className="font-bold text-amber-800 mb-2 flex items-center gap-1.5">
+                        <Lock className="w-3.5 h-3.5 text-amber-600" />
+                        <span>Накопительный режим — Что мы копим сегодня:</span>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
+                        {day.accumulation.map((item, i) => (
+                          <div key={i} className="bg-white/80 p-2.5 rounded-lg border border-amber-100 flex flex-col justify-between shadow-3xs">
+                            <div>
+                              <span className="font-semibold text-slate-800 block">{item.item}</span>
+                              <span className="text-[11px] text-slate-600 mt-0.5 block">{item.description}</span>
+                            </div>
+                            <div className="mt-2.5 flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-100/60 px-2 py-0.5 rounded-md w-fit">
+                              <span className="uppercase font-mono text-[9px] text-amber-900 opacity-80">Понадобится:</span>
+                              <span>{item.targetDay}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Footer actions */}
                   <div className="flex items-center justify-between pt-3 border-t border-slate-200 flex-wrap gap-2">

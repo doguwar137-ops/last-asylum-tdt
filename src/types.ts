@@ -22,6 +22,11 @@ export interface DuelDay {
     pointsEstimate: string;
     priority: "HIGH" | "MEDIUM" | "CRITICAL";
   }[];
+  accumulation?: {
+    item: string;
+    targetDay: string;
+    description: string;
+  }[];
 }
 
 export interface HeroInfo {

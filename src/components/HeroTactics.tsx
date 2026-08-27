@@ -11,7 +11,7 @@ import {
   HelpCircle,
   Zap,
 } from "lucide-react";
-import { FIRST_SQUAD_HEROES } from "../data/allianceData";
+import { FIRST_SQUAD_HEROES, ALLIANCE_NAME } from "../data/allianceData";
 import { HeroInfo } from "../types";
 
 export const HeroTactics: React.FC = () => {
@@ -25,7 +25,7 @@ export const HeroTactics: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <Swords className="w-5 h-5 text-amber-600" />
             <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-              Тактика Отрядов и Героев [tDt]
+              Тактика Отрядов и Героев {ALLIANCE_NAME}
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
@@ -59,7 +59,7 @@ export const HeroTactics: React.FC = () => {
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <div>
             <span className="text-xs font-mono uppercase font-bold text-amber-700 tracking-wider">
-              ГЛАВНАЯ УДАРНАЯ СИЛА [tDt]
+              ГЛАВНАЯ УДАРНАЯ СИЛА {ALLIANCE_NAME}
             </span>
             <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 mt-0.5">
               Первый Ударный Отряд: Полный Состав

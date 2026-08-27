@@ -129,7 +129,7 @@ export const AllianceCodex: React.FC = () => {
           <div>
             <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
               <Shield className="w-5 h-5 text-amber-600" />
-              <span>Личный чек-лист готовности бойца [tDt]</span>
+              <span>Личный чек-лист готовности бойца {ALLIANCE_NAME}</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
               Отметьте пункты, которые вы подтверждаете и строго соблюдаете
