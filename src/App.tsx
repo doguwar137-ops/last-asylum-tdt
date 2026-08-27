@@ -14,12 +14,10 @@ import {
   Flame,
   BookOpen,
   Ticket,
-  Star,
 } from "lucide-react";
 import { Header } from "./components/Header";
 import { TodayDirective } from "./components/TodayDirective";
 import { WeeklySchedule } from "./components/WeeklySchedule";
-import { HeroGuide } from "./components/HeroGuide";
 import { AllianceCodex } from "./components/AllianceCodex";
 import { BroadcastGenerator } from "./components/BroadcastGenerator";
 import { CheeseTrapGuide } from "./components/CheeseTrapGuide";
@@ -53,7 +51,6 @@ export default function App() {
     { id: "today", label: "Директива Дня", icon: Shield, badge: "СЕГОДНЯ" },
     { id: "schedule", label: "Календарь (7 Дней)", icon: Calendar },
     { id: "broadcast", label: "Штабные Приказы", icon: Radio },
-    { id: "hero-guide", label: "Гайд по Героям", icon: Star, badge: "ТОП" },
     { id: "cheese-trap", label: "Сырная Ловушка", icon: Flame, badge: "ГАЙД" },
     { id: "promo", label: "Промокоды", icon: Ticket },
     { id: "codex", label: "Кодекс & Дисциплина", icon: ShieldAlert, badge: "КИК" },
@@ -129,10 +126,6 @@ export default function App() {
 
         {currentTab === "promo" && (
           <PromoCodesModule promoCodes={promoCodes} setPromoCodes={setPromoCodes} />
-        )}
-
-        {currentTab === "hero-guide" && (
-          <HeroGuide />
         )}
 
         {currentTab === "cheese-trap" && (
