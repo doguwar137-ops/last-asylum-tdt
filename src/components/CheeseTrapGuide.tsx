@@ -108,6 +108,28 @@ export const CheeseTrapGuide: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Offline Participation Banner */}
+      <div className="rounded-2xl bg-indigo-50 border border-indigo-200 p-5 sm:p-6 shadow-2xs space-y-4">
+        <div className="flex items-center gap-2 mb-2">
+          <Sparkles className="w-5 h-5 text-indigo-600" />
+          <h3 className="text-base sm:text-lg font-bold text-indigo-900">
+            Что делать, если нет возможности участвовать онлайн?
+          </h3>
+        </div>
+        <p className="text-xs sm:text-sm text-indigo-800 leading-relaxed">
+          Если вы не можете присутствовать в игре в момент штурма, вы можете настроить офлайн-участие. Это позволит вашему отряду автоматически внести свой вклад в штурм, даже когда вас нет в сети.
+        </p>
+        
+        <div className="bg-white rounded-xl p-4 border border-indigo-100">
+          <h4 className="text-xs font-bold text-slate-800 mb-3 uppercase tracking-wider">Как это сделать:</h4>
+          <ol className="list-decimal list-inside space-y-2 text-xs sm:text-sm text-slate-700 font-medium">
+            <li>Зайдите в событие на главном экране игры.</li>
+            <li>Выберите <strong className="text-slate-900">«Сырную ловушку»</strong>.</li>
+            <li>Нажмите кнопку <strong className="text-indigo-700">«Участвовать офлайн»</strong>.</li>
+          </ol>
+        </div>
+      </div>
     </div>
   );
 };

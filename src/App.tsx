@@ -38,11 +38,11 @@ export default function App() {
   const navTabs = [
     { id: "today", label: "Директива Дня", icon: Shield, badge: "СЕГОДНЯ" },
     { id: "schedule", label: "Календарь (7 Дней)", icon: Calendar },
-    { id: "heroes", label: "Отряды и Герои", icon: Swords },
+    { id: "broadcast", label: "Штабные Приказы", icon: Radio },
     { id: "cheese-trap", label: "Сырная Ловушка", icon: Flame, badge: "ГАЙД" },
     { id: "codex", label: "Кодекс & Дисциплина", icon: ShieldAlert, badge: "КИК" },
+    { id: "heroes", label: "Отряды и Герои", icon: Swords },
     { id: "quiz", label: "Викторина", icon: BookOpen, badge: "ОТВЕТЫ" },
-    { id: "broadcast", label: "Штабные Приказы", icon: Radio },
   ];
 
   return (
