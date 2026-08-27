@@ -14,6 +14,7 @@ import {
   Radio,
   Flame,
   BookOpen,
+  Ticket,
 } from "lucide-react";
 import { Header } from "./components/Header";
 import { TodayDirective } from "./components/TodayDirective";
@@ -23,10 +24,23 @@ import { AllianceCodex } from "./components/AllianceCodex";
 import { BroadcastGenerator } from "./components/BroadcastGenerator";
 import { CheeseTrapGuide } from "./components/CheeseTrapGuide";
 import { QuizCheatSheet } from "./components/QuizCheatSheet";
+import { PromoCodesModule } from "./components/PromoCodesModule";
 import { ALLIANCE_NAME, GAME_TITLE } from "./data/allianceData";
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<string>("today");
+  const [promoCodes, setPromoCodes] = useState<string[]>(() => {
+    try {
+      const stored = localStorage.getItem("dream_promo_codes");
+      if (stored) return JSON.parse(stored);
+    } catch(e) {}
+    return [];
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem("dream_promo_codes", JSON.stringify(promoCodes));
+  }, [promoCodes]);
+
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(() => {
     const now = new Date();
     const utc = now.getTime() + now.getTimezoneOffset() * 60000;
@@ -40,6 +54,7 @@ export default function App() {
     { id: "schedule", label: "Календарь (7 Дней)", icon: Calendar },
     { id: "broadcast", label: "Штабные Приказы", icon: Radio },
     { id: "cheese-trap", label: "Сырная Ловушка", icon: Flame, badge: "ГАЙД" },
+    { id: "promo", label: "Промокоды", icon: Ticket },
     { id: "codex", label: "Кодекс & Дисциплина", icon: ShieldAlert, badge: "КИК" },
     { id: "heroes", label: "Отряды и Герои", icon: Swords },
     { id: "quiz", label: "Викторина", icon: BookOpen, badge: "ОТВЕТЫ" },
@@ -98,6 +113,7 @@ export default function App() {
             selectedDayIndex={selectedDayIndex}
             setSelectedDayIndex={setSelectedDayIndex}
             onOpenCalculator={() => setCurrentTab("calculator")}
+            promoCodes={promoCodes}
           />
         )}
 
@@ -107,7 +123,12 @@ export default function App() {
               setSelectedDayIndex(idx);
               setCurrentTab("today");
             }}
+            promoCodes={promoCodes}
           />
+        )}
+
+        {currentTab === "promo" && (
+          <PromoCodesModule promoCodes={promoCodes} setPromoCodes={setPromoCodes} />
         )}
 
         {currentTab === "heroes" && (

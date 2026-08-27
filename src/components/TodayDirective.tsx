@@ -12,6 +12,7 @@ import {
   Lock,
   ArrowRight,
   Info,
+  Ticket,
 } from "lucide-react";
 import { DUEL_DAYS, ALLIANCE_NAME, DUEL_QUOTA } from "../data/allianceData";
 import { DuelDay } from "../types";
@@ -20,12 +21,14 @@ interface TodayDirectiveProps {
   selectedDayIndex: number;
   setSelectedDayIndex: (idx: number) => void;
   onOpenCalculator: () => void;
+  promoCodes?: string[];
 }
 
 export const TodayDirective: React.FC<TodayDirectiveProps> = ({
   selectedDayIndex,
   setSelectedDayIndex,
   onOpenCalculator,
+  promoCodes = [],
 }) => {
   const [copiedMail, setCopiedMail] = useState(false);
   const [copiedChat, setCopiedChat] = useState(false);
@@ -83,6 +86,30 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
           );
         })}
       </div>
+
+      {/* Promo Codes Block (Active) */}
+      {promoCodes.length > 0 && (
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200 p-4 sm:p-5 shadow-2xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Ticket className="w-5 h-5 text-amber-600" />
+              <h3 className="text-sm font-bold text-amber-900 uppercase tracking-wider">
+                Активные Промокоды
+              </h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {promoCodes.map((code) => (
+                <div
+                  key={code}
+                  className="px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-amber-700 font-mono font-bold text-sm shadow-xs flex items-center gap-2"
+                >
+                  {code}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Tactical Directive Card */}
       <div className="relative rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 shadow-2xs overflow-hidden">
