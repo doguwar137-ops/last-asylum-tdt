@@ -19,8 +19,6 @@ import { Header } from "./components/Header";
 import { TodayDirective } from "./components/TodayDirective";
 import { WeeklySchedule } from "./components/WeeklySchedule";
 import { HeroTactics } from "./components/HeroTactics";
-import { FalconSimulator } from "./components/FalconSimulator";
-import { DuelCalculator } from "./components/DuelCalculator";
 import { AllianceCodex } from "./components/AllianceCodex";
 import { BroadcastGenerator } from "./components/BroadcastGenerator";
 import { CheeseTrapGuide } from "./components/CheeseTrapGuide";
@@ -42,8 +40,6 @@ export default function App() {
     { id: "schedule", label: "Календарь (7 Дней)", icon: Calendar },
     { id: "heroes", label: "Отряды и Герои", icon: Swords },
     { id: "cheese-trap", label: "Сырная Ловушка", icon: Flame, badge: "ГАЙД" },
-    { id: "falcon", label: "Тренажер Сокола", icon: CheckCircle2, highlight: true },
-    { id: "calculator", label: "Калькулятор 1М", icon: Calculator },
     { id: "codex", label: "Кодекс & Дисциплина", icon: ShieldAlert, badge: "КИК" },
     { id: "quiz", label: "Викторина", icon: BookOpen, badge: "ОТВЕТЫ" },
     { id: "broadcast", label: "Штабные Приказы", icon: Radio },
@@ -120,12 +116,6 @@ export default function App() {
 
         {currentTab === "cheese-trap" && (
           <CheeseTrapGuide />
-        )}
-
-        {currentTab === "falcon" && <FalconSimulator />}
-
-        {currentTab === "calculator" && (
-          <DuelCalculator />
         )}
 
         {currentTab === "codex" && <AllianceCodex />}

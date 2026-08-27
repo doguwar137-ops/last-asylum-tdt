@@ -113,7 +113,7 @@ export const AllianceCodex: React.FC = () => {
                   ) : (
                     <>
                       <Copy className="w-3.5 h-3.5 text-slate-400" />
-                      <span>Скопировать для чата</span>
+                      <span>Скопировать для почты альянса</span>
                     </>
                   )}
                 </button>

@@ -114,7 +114,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
             ) : (
               <>
                 <Copy className="w-4 h-4 text-white" />
-                <span>Скопировать план на неделю</span>
+                <span>Скопировать план на неделю (для почты Альянса)</span>
               </>
             )}
           </button>
@@ -304,7 +304,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                         ) : (
                           <>
                             <Copy className="w-3.5 h-3.5 text-slate-500" />
-                            <span>Скопировать для чата</span>
+                            <span>Скопировать для почты альянса</span>
                           </>
                         )}
                       </button>

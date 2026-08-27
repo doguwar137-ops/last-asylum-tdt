@@ -115,7 +115,7 @@ export function QuizCheatSheet() {
               <button
                 onClick={() => handleCopy(item.q, item.a, index)}
                 className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-purple-600 hover:bg-purple-50 transition-colors"
-                title="Скопировать для чата"
+                title="Скопировать для почты альянса"
               >
                 {copiedIndex === index ? (
                   <Check className="w-4 h-4 text-emerald-600" />

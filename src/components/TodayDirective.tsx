@@ -111,7 +111,7 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
               ) : (
                 <>
                   <Copy className="w-4 h-4 text-slate-500" />
-                  <span>Скопировать для чата</span>
+                  <span>Скопировать для почты альянса</span>
                 </>
               )}
             </button>

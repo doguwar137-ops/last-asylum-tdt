@@ -135,7 +135,7 @@ export const BroadcastGenerator: React.FC = () => {
           ) : (
             <>
               <Copy className="w-4 h-4 text-white" />
-              <span>Скопировать приказ</span>
+              <span>Скопировать приказ (для почты Альянса)</span>
             </>
           )}
         </button>
@@ -203,7 +203,7 @@ export const BroadcastGenerator: React.FC = () => {
                 className="text-amber-800 hover:text-amber-900 font-bold flex items-center gap-1"
               >
                 <Copy className="w-3.5 h-3.5" />
-                <span>Быстрое копирование</span>
+                <span>Быстрое копирование (для почты Альянса)</span>
               </button>
             </div>
           </div>
