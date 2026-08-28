@@ -432,7 +432,7 @@ export const CALCULATOR_CATEGORIES = [
   { id: "training_hours", name: "Ускорения тренировки войск (Пятница)", unit: "часов", pointsPerUnit: 16_000, defaultVal: 10, category: "speedups" },
   { id: "hero_exp_m", name: "Опыт героев главного отряда (Четверг)", unit: "млн опыта", pointsPerUnit: 120_000, defaultVal: 2, category: "heroes" },
   { id: "hero_shards", name: "Осколки героев (Четверг)", unit: "шт", pointsPerUnit: 10_000, defaultVal: 15, category: "heroes" },
-  { id: "raven_chests", name: "Сундуки Ворона / Эссенции (Среда/Пятница)", unit: "шт", pointsPerUnit: 25_000, defaultVal: 8, category: "items" },
+  { id: "raven_chests", name: "Сундуки Ворона / Эссенции (Среда)", unit: "шт", pointsPerUnit: 25_000, defaultVal: 8, category: "items" },
   { id: "heal_hours", name: "Ускорения лечения & засады UR (Суббота)", unit: "часов", pointsPerUnit: 20_000, defaultVal: 10, category: "speedups" },
   { id: "universal_hours", name: "Слив универсальных ускорений (Суббота)", unit: "часов", pointsPerUnit: 15_000, defaultVal: 15, category: "speedups" },
   { id: "map_gather", name: "Сбор ресурсов на карте (Понедельник-Воскресенье)", unit: "заходов", pointsPerUnit: 12_000, defaultVal: 10, category: "gather" },
