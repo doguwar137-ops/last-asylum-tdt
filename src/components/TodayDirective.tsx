@@ -51,7 +51,7 @@ ${currentDay.phaseName}
   const handleCopyOrderChat = () => {
     const text =
       currentDay.shortChatTemplate ||
-      `${currentDay.name}: ${currentDay.focus}. Норма: минимум 1M очков.`;
+      `${currentDay.name}: ${currentDay.focus}.`;
     navigator.clipboard.writeText(text);
     setCopiedChat(true);
     setTimeout(() => setCopiedChat(false), 2500);
@@ -355,7 +355,7 @@ ${currentDay.phaseName}
               onClick={onOpenCalculator}
               className="mt-4 w-full py-2 px-3 rounded-lg bg-white hover:bg-slate-100 text-amber-800 hover:text-amber-900 text-xs font-bold flex items-center justify-center gap-2 border border-slate-200 transition-colors shadow-2xs"
             >
-              <span>Калькулятор нормы (1М)</span>
+              <span>Калькулятор очков дуэли</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -379,7 +379,7 @@ ${currentDay.phaseName}
         </div>
         <div className="text-right">
           <span className="text-xs font-mono font-bold text-amber-900 px-2.5 py-1 rounded bg-white border border-amber-200 shadow-2xs">
-            Норматив: МИНИМУМ 1 000 000 очков на сегодня (суточный)
+            Ежедневное участие строго обязательно
           </span>
         </div>
       </div>
