@@ -35,11 +35,13 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
   const currentDay: DuelDay = DUEL_DAYS[selectedDayIndex] || DUEL_DAYS[0];
 
   const handleCopyOrder = () => {
-    const text = `📢 ${ALLIANCE_NAME} БОЕВОЙ ПРИКАЗ: ${currentDay.name.toUpperCase()} (${currentDay.phaseName})
-🎯 Главный фокус: ${currentDay.focus}
-🦅 ЗАДАНИЯ СОКОЛА: ${currentDay.falconRule.title} — ${currentDay.falconRule.description}
-⛔️ СТРОГИЙ ЗАПРЕТ: ${currentDay.forbiddenActions[0] || "Слив ресурсов не по фазе"}
-📊 Норматив дуэли: МИНИМУМ 1 000 000 очков на сегодня (суточный)!`;
+    const text =
+      currentDay.exactMailTemplate ||
+      `БОЕВОЙ ПРИКАЗ: ${currentDay.name.toUpperCase()}
+${currentDay.phaseName}
+Главные задачи: ${currentDay.allowedActions.join(", ")}
+Дополнительно: ${currentDay.tips.join(", ")}
+Строгий запрет: ${currentDay.forbiddenActions.join(", ")}`;
 
     navigator.clipboard.writeText(text);
     setCopiedMail(true);
@@ -47,7 +49,9 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
   };
 
   const handleCopyOrderChat = () => {
-    const text = currentDay.shortChatTemplate || `[Dream] ${currentDay.name}: ${currentDay.focus}. Норма: минимум 1M очков.`;
+    const text =
+      currentDay.shortChatTemplate ||
+      `${currentDay.name}: ${currentDay.focus}. Норма: минимум 1M очков.`;
     navigator.clipboard.writeText(text);
     setCopiedChat(true);
     setTimeout(() => setCopiedChat(false), 2500);
@@ -264,7 +268,7 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
                   key={i}
                   className="text-xs sm:text-sm text-slate-700 flex items-start gap-2"
                 >
-                  <span className="text-rose-600 font-bold mt-0.5">✕</span>
+                  <span className="text-rose-600 font-bold mt-0.5">-</span>
                   <span>{action}</span>
                 </li>
               ))}
@@ -339,8 +343,9 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
               </h4>
               <ul className="space-y-2">
                 {currentDay.tips.map((tip, i) => (
-                  <li key={i} className="text-xs text-slate-700 leading-relaxed">
-                    💡 {tip}
+                  <li key={i} className="text-xs text-slate-700 leading-relaxed flex items-start gap-1.5">
+                    <span className="text-amber-600 font-bold">•</span>
+                    <span>{tip}</span>
                   </li>
                 ))}
               </ul>

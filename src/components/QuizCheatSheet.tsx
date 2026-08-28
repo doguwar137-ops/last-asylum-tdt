@@ -59,7 +59,7 @@ export function QuizCheatSheet() {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = (q: string, a: string, index: number) => {
-    const text = `❓ Вопрос: ${q}\n✅ Ответ: ${a}`;
+    const text = `Вопрос: ${q}\nОтвет: ${a}`;
     navigator.clipboard.writeText(text);
     setCopiedIndex(index);
     setTimeout(() => setCopiedIndex(null), 2000);

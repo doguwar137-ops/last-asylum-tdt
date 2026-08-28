@@ -20,9 +20,9 @@ export const AllianceCodex: React.FC = () => {
   const [copiedChatRuleId, setCopiedChatRuleId] = useState<string | null>(null);
 
   const handleCopyMailRule = (rule: any) => {
-    const text = `📢 [Dream] ПРАВИЛО АЛЬЯНСА: ${rule.title.toUpperCase()} (${rule.badge})
-🎯 Суть: ${rule.summary}
-ℹ️ Подробности: ${rule.details}`;
+    const text = `ПРАВИЛО АЛЬЯНСА: ${rule.title.toUpperCase()} (${rule.badge})
+Суть: ${rule.summary}
+Подробности: ${rule.details}`;
     navigator.clipboard.writeText(text);
     setCopiedMailRuleId(rule.id);
     setTimeout(() => setCopiedMailRuleId(null), 2500);

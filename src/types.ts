@@ -28,6 +28,7 @@ export interface DuelDay {
     description: string;
   }[];
   shortChatTemplate?: string;
+  exactMailTemplate?: string;
 }
 
 export interface HeroInfo {

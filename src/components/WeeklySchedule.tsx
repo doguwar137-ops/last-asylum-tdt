@@ -62,12 +62,19 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
   };
 
   const handleCopyDay = (day: DuelDay) => {
-    const text = `📢 [Dream] БОЕВОЙ ПРИКАЗ: ${day.name.toUpperCase()} (${day.phaseName})
-🎯 Главный фокус: ${day.focus}
-🦅 ПРАВИЛО СОКОЛА: ${day.falconRule.title} — ${day.falconRule.description}
-⛔️ СТРОГИЙ ЗАПРЕТ:
-✕ ${day.forbiddenActions.join("\n✕ ")}
-📊 Норматив дуэли: МИНИМУМ 1 000 000 очков на сегодня (суточный)!`;
+    const text =
+      day.exactMailTemplate ||
+      `БОЕВОЙ ПРИКАЗ: ${day.name.toUpperCase()}
+${day.phaseName}
+
+Главные задачи:
+${day.allowedActions.map((a) => `- ${a}`).join("\n")}
+
+Дополнительно:
+${day.tips.map((t) => `- ${t}`).join("\n")}
+
+Строгий запрет:
+${day.forbiddenActions.map((f) => `- ${f}`).join("\n")}`;
 
     navigator.clipboard.writeText(text);
     setCopiedDayMailId(day.id);
@@ -75,30 +82,29 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
   };
 
   const handleCopyDayChat = (day: DuelDay) => {
-    const text = day.shortChatTemplate || `[Dream] ${day.name}: ${day.focus}. Норма: минимум 1M очков.`;
+    const text = day.shortChatTemplate || `${day.name.replace(/ \([^)]+\)/, '')}: ${day.phaseName.replace(/ \([^)]+\)/, '')}. Норма: минимум 1M очков.`;
     navigator.clipboard.writeText(text);
     setCopiedDayChatId(day.id);
     setTimeout(() => setCopiedDayChatId(null), 2500);
   };
 
   const handleCopyWeeklyPlan = () => {
-    const planText = `📢 [Dream] ПЛАН СБРОСА РЕСУРСОВ НА НЕДЕЛЮ (ДУЭЛЬ):
-📅 День 1 (Пн): Технологии & Сокол — Сдача Сокола. Улучшаем технологии и Ворона. Копим сундуки до Ср, опыт до Чт, войска до Пт.
-📅 День 2 (Вт): Стройка — Качаем здания, призыв выживших. Отправка только золотых (UR) караванов/миссий. Строительные ускорения — строго в крайнем случае! Сокола копим.
-📅 День 3 (Ср): Наука & Сокол — Сдача Сокола со Вт. Научные исследования, свитки, Сундуки Ворона. Нового Сокола копим на Пт!
-📅 День 4 (Чт): Герои — Призыв, прокачка уровня/звезд осколками СТРОГО 1-го отряда. Сокола копим на Пт!
-📅 День 5 (Пт): Войска & Сокол — Сдача всего накопленного Сокола со Ср/Чт. Тренировка войск, плоды Ворона. Оставьте универсальные ускорения на Сб!
-📅 День 6 (Суббота): Лечение & Операции — Лечение, засады UR, караваны врагов. Слив остатков ускорений до нормы 1M. Щит обязательно!
-📅 День 7 (Вс): Копилка — СТРОГИЙ стоп по всем тратам! Полный режим сбережения ресурсов и ускорителей на новую неделю.
-🛡️ Норматив: минимум 1 000 000 очков в день! ШТАБ [Dream]`;
-
+    const planText = `ПЛАН СБРОСА РЕСУРСОВ НА НЕДЕЛЮ (ДУЭЛЬ):
+День 1 (Пн): Улучшение Ворона (Активность) — Сдача Сокола. Улучшаем Ворона. Копим строительные ускорения!
+День 2 (Вт): Развитие Территории (Строительство) — Стройка, караваны, выжившие. Копим ускорители исследований и сундуки Ворона!
+День 3 (Ср): Технологические Исследования — Сдача Сокола. Исследования, сундуки Ворона. Копим ускорители обучения!
+День 4 (Чт): Рост Героя (Прокачка) — Прокачка уровня/звезд осколками СТРОГО 1-го отряда. Копим ускорители обучения!
+День 5 (Пт): Подготовка к Войне — Сдача всего накопленного Сокола. Тренировка войск, плоды Ворона. Чужие караваны. Универсальные ускорения не сливаем в ноль!
+День 6 (Сб): Рейд на Врага — Караваны и операции UR на чужих серверах. Тратим все ускорения.
+День 7 (Вс): Копилка — СТРОГИЙ стоп по всем тратам! Полный режим сбережения ресурсов и ускорителей на новую неделю.
+Норматив: Минимум 1 000 000 очков в день! ШТАБ`;
     navigator.clipboard.writeText(planText);
     setCopiedPlanMail(true);
     setTimeout(() => setCopiedPlanMail(false), 2500);
   };
 
   const handleCopyWeeklyPlanChat = () => {
-    const planText = `[Dream] Неделя: Пн-Тех/Сокол | Вт-Стройка | Ср-Наука/Сокол | Чт-Герои | Пт-Войска/Сокол | Сб-Лечение | Вс-Копилка. Норма минимум 1M в день!`;
+    const planText = `Неделя: Пн-Ворон | Вт-Стройка | Ср-Наука | Чт-Герои | Пт-Войска | Сб-Рейд | Вс-Копилка. Норма минимум 1M в день!`;
     navigator.clipboard.writeText(planText);
     setCopiedPlanChat(true);
     setTimeout(() => setCopiedPlanChat(false), 2500);
@@ -311,7 +317,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                       <ul className="space-y-1 text-slate-700">
                         {day.forbiddenActions.map((act, i) => (
                           <li key={i} className="flex items-start gap-1.5">
-                            <span className="text-rose-600 font-bold">✕</span>
+                            <span className="text-rose-600 font-bold">-</span>
                             <span>{act}</span>
                           </li>
                         ))}
