@@ -7,37 +7,20 @@ import React, { useState } from "react";
 import {
   Shield,
   Calendar,
-  CheckCircle2,
-  Calculator,
   ShieldAlert,
-  Radio,
   Flame,
   BookOpen,
-  Ticket,
 } from "lucide-react";
 import { Header } from "./components/Header";
 import { TodayDirective } from "./components/TodayDirective";
 import { WeeklySchedule } from "./components/WeeklySchedule";
-import { AllianceCodex } from "./components/AllianceCodex";
-import { BroadcastGenerator } from "./components/BroadcastGenerator";
+import { AllianceRules } from "./components/AllianceRules";
 import { CheeseTrapGuide } from "./components/CheeseTrapGuide";
 import { QuizCheatSheet } from "./components/QuizCheatSheet";
-import { PromoCodesModule } from "./components/PromoCodesModule";
 import { ALLIANCE_NAME, GAME_TITLE } from "./data/allianceData";
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<string>("today");
-  const [promoCodes, setPromoCodes] = useState<string[]>(() => {
-    try {
-      const stored = localStorage.getItem("dream_promo_codes");
-      if (stored) return JSON.parse(stored);
-    } catch(e) {}
-    return [];
-  });
-
-  React.useEffect(() => {
-    localStorage.setItem("dream_promo_codes", JSON.stringify(promoCodes));
-  }, [promoCodes]);
 
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(() => {
     const now = new Date();
@@ -49,11 +32,9 @@ export default function App() {
 
   const navTabs = [
     { id: "today", label: "Директива Дня", icon: Shield, badge: "СЕГОДНЯ" },
+    { id: "rules", label: "Правила Альянса", icon: ShieldAlert, badge: "ВАЖНО" },
     { id: "schedule", label: "Календарь (7 Дней)", icon: Calendar },
-    { id: "broadcast", label: "Штабные Приказы", icon: Radio },
     { id: "cheese-trap", label: "Сырная Ловушка", icon: Flame, badge: "ГАЙД" },
-    { id: "promo", label: "Промокоды", icon: Ticket },
-    { id: "codex", label: "Кодекс & Дисциплина", icon: ShieldAlert, badge: "КИК" },
     { id: "quiz", label: "Викторина", icon: BookOpen, badge: "ОТВЕТЫ" },
   ];
 
@@ -109,8 +90,7 @@ export default function App() {
           <TodayDirective
             selectedDayIndex={selectedDayIndex}
             setSelectedDayIndex={setSelectedDayIndex}
-            onOpenCalculator={() => setCurrentTab("calculator")}
-            promoCodes={promoCodes}
+            onOpenRules={() => setCurrentTab("rules")}
           />
         )}
 
@@ -120,33 +100,28 @@ export default function App() {
               setSelectedDayIndex(idx);
               setCurrentTab("today");
             }}
-            promoCodes={promoCodes}
           />
         )}
 
-        {currentTab === "promo" && (
-          <PromoCodesModule promoCodes={promoCodes} setPromoCodes={setPromoCodes} />
+        {currentTab === "rules" && (
+          <AllianceRules />
         )}
 
         {currentTab === "cheese-trap" && (
           <CheeseTrapGuide />
         )}
-
-        {currentTab === "codex" && <AllianceCodex />}
         
         {currentTab === "quiz" && <QuizCheatSheet />}
-
-        {currentTab === "broadcast" && <BroadcastGenerator />}
       </main>
 
       {/* Footer */}
       <footer className="border-t border-slate-200 bg-white py-5 text-center text-xs text-slate-500 font-mono">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>
-            Альянс {ALLIANCE_NAME} • {GAME_TITLE} • Официальный Штабной Стратег
+            Альянс {ALLIANCE_NAME} • {GAME_TITLE}
           </span>
           <span className="text-slate-600">
-            Норматив Дуэли: <strong className="text-amber-700">МИНИМУМ 1 000 000 очков на сегодня (суточный)</strong> • Строго по гайдам
+            Норматив Дуэли: <strong className="text-amber-700">МИНИМУМ 2 000 000 очков в день от каждого</strong> • Взносы в науку по значку 👍
           </span>
         </div>
       </footer>

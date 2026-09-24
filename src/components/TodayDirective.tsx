@@ -12,7 +12,7 @@ import {
   Lock,
   ArrowRight,
   Info,
-  Ticket,
+  FlaskConical,
 } from "lucide-react";
 import { DUEL_DAYS, ALLIANCE_NAME, DUEL_QUOTA } from "../data/allianceData";
 import { DuelDay } from "../types";
@@ -20,15 +20,13 @@ import { DuelDay } from "../types";
 interface TodayDirectiveProps {
   selectedDayIndex: number;
   setSelectedDayIndex: (idx: number) => void;
-  onOpenCalculator: () => void;
-  promoCodes?: string[];
+  onOpenRules?: () => void;
 }
 
 export const TodayDirective: React.FC<TodayDirectiveProps> = ({
   selectedDayIndex,
   setSelectedDayIndex,
-  onOpenCalculator,
-  promoCodes = [],
+  onOpenRules,
 }) => {
   const [copiedMail, setCopiedMail] = useState(false);
   const [copiedChat, setCopiedChat] = useState(false);
@@ -37,7 +35,7 @@ export const TodayDirective: React.FC<TodayDirectiveProps> = ({
   const handleCopyOrder = () => {
     const text =
       currentDay.exactMailTemplate ||
-      `БОЕВОЙ ПРИКАЗ: ${currentDay.name.toUpperCase()}
+      `${currentDay.name.toUpperCase()}
 ${currentDay.phaseName}
 Главные задачи: ${currentDay.allowedActions.join(", ")}
 Дополнительно: ${currentDay.tips.join(", ")}
@@ -91,30 +89,6 @@ ${currentDay.phaseName}
         })}
       </div>
 
-      {/* Promo Codes Block (Active) */}
-      {promoCodes.length > 0 && (
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200 p-4 sm:p-5 shadow-2xs">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <Ticket className="w-5 h-5 text-amber-600" />
-              <h3 className="text-sm font-bold text-amber-900 uppercase tracking-wider">
-                Активные Промокоды
-              </h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {promoCodes.map((code) => (
-                <div
-                  key={code}
-                  className="px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-amber-700 font-mono font-bold text-sm shadow-xs flex items-center gap-2"
-                >
-                  {code}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Main Tactical Directive Card */}
       <div className="relative rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 shadow-2xs overflow-hidden">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 pb-5">
@@ -145,7 +119,7 @@ ${currentDay.phaseName}
               {copiedMail ? (
                 <>
                   <Check className="w-4 h-4 text-emerald-600" />
-                  <span className="text-emerald-700 font-bold">Приказ скопирован!</span>
+                  <span className="text-emerald-700 font-bold">Скопировано для почты!</span>
                 </>
               ) : (
                 <>
@@ -174,7 +148,7 @@ ${currentDay.phaseName}
           </div>
         </div>
 
-        {/* Falcon Protocol Hero Alert */}
+        {/* Falcon Rules Hero Alert */}
         <div className="mt-5">
           <div
             className={`rounded-xl p-4 sm:p-5 border transition-all ${
@@ -204,21 +178,69 @@ ${currentDay.phaseName}
                         : "bg-rose-200/80 text-rose-900 border border-rose-300"
                     }`}
                   >
-                    ПРОТОКОЛ ДИСПЕТЧЕРСКОЙ
+                    ПРАВИЛА ЗАДАНИЙ СОКОЛА
                   </span>
                   <span className="text-xs text-slate-500 font-mono font-medium">
-                    Задания Сокола
+                    Соколиная башня
+                  </span>
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-rose-500 text-white font-mono flex items-center gap-1 shadow-2xs">
+                    <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                    🔴 Красный кружок = Выполнено
                   </span>
                 </div>
-                <h3 className="text-base sm:text-lg font-bold mt-1 text-slate-900">
+                <h3 className="text-base sm:text-lg font-bold mt-1.5 text-slate-900">
                   {currentDay.falconRule.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-700 mt-1">
+                <p className="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
                   {currentDay.falconRule.description}
                 </p>
+
+                {/* Clear Explanatory Step Badge for Falcon Mission mechanics */}
+                <div className={`mt-3 p-3 rounded-lg border text-xs leading-relaxed ${
+                  isFalconClaimDay 
+                    ? "bg-emerald-100/70 border-emerald-300 text-emerald-950" 
+                    : "bg-amber-50 border-amber-300 text-amber-950"
+                }`}>
+                  <div className="font-extrabold flex items-center gap-1.5 mb-1.5">
+                    {isFalconClaimDay ? (
+                      <>
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                        <span>ИНСТРУКЦИЯ СДАЧИ: ЖМЕМ «ЗАБРАТЬ ВСЕ»</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-base leading-none">🔴</span>
+                        <span>ПОЧЕМУ ВАЖНО ВЫПОЛНЯТЬ, НО НЕ ЗАБИРАТЬ:</span>
+                      </>
+                    )}
+                  </div>
+                  {isFalconClaimDay ? (
+                    <div className="space-y-1">
+                      <p>
+                        Заходите в Соколиную башню и жмите кнопку <strong>«Забрать все»</strong> по всем накопленным заданиям с <strong>красными кружками 🔴</strong>! Все накопленные очки мгновенно зачтутся в суточные цели Дуэли Альянсов!
+                      </p>
+                      <p className="text-emerald-900 font-bold bg-emerald-100/60 p-2 rounded-lg border border-emerald-300">
+                        ⚡ <strong>Важное уточнение:</strong> если после сбора в течение дня у вас появляются новые задания в башне — обязательно отправляйте отряды, выполняйте их и сразу забирайте награды весь день до конца суток!
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-1">
+                      <p>
+                        <strong>1. Задания ОБЯЗАТЕЛЬНО выполнять:</strong> отправляйте отряды на все задания в башне, не давайте компасам простаивать!
+                      </p>
+                      <p>
+                        <strong>2. Дождитесь КРАСНОГО КРУЖКА 🔴:</strong> появление красного кружка означает, что задание успешно завершено. Оно <strong>НЕ пропадет</strong> и <strong>НЕ сгорит</strong>!
+                      </p>
+                      <p className="text-rose-800 font-bold">
+                        3. Кнопку «Забрать» НЕ трогаем! Держим все готовые миссии на карте башни до дня сдачи (например, до пятницы на фазу войск).
+                      </p>
+                    </div>
+                  )}
+                </div>
+
                 {currentDay.falconRule.warning && (
                   <p
-                    className={`text-xs font-bold mt-2 flex items-center gap-1.5 ${
+                    className={`text-xs font-bold mt-2.5 flex items-center gap-1.5 ${
                       isFalconClaimDay ? "text-emerald-700" : "text-rose-700"
                     }`}
                   >
@@ -350,19 +372,45 @@ ${currentDay.phaseName}
                 ))}
               </ul>
             </div>
-
-            <button
-              onClick={onOpenCalculator}
-              className="mt-4 w-full py-2 px-3 rounded-lg bg-white hover:bg-slate-100 text-amber-800 hover:text-amber-900 text-xs font-bold flex items-center justify-center gap-2 border border-slate-200 transition-colors shadow-2xs"
-            >
-              <span>Калькулятор очков дуэли</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
           </div>
         </div>
       </div>
 
-      {/* Strict Cheese Trap Protocol Reminder */}
+      {/* Mandatory Tech Donation & Server Policy Banner */}
+      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-white to-amber-50 border border-sky-300 p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-2xs">
+        <div className="flex items-start gap-3.5">
+          <div className="p-2.5 rounded-xl bg-sky-100 text-sky-700 border border-sky-200 mt-0.5 flex-shrink-0">
+            <FlaskConical className="w-5 h-5 text-sky-600" />
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-extrabold text-sky-950">ОБЯЗАТЕЛЬНЫЙ РЕГЛАМЕНТ</span>
+              <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200 flex items-center gap-1">
+                👍 Взнос строго по рекомендации
+              </span>
+              <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-200">
+                Дуэль: 2 000 000 очков
+              </span>
+            </div>
+            <p className="text-xs text-slate-700 leading-relaxed max-w-3xl">
+              Взносы в «Исследование альянса» делаем каждый день строго в технологию со значком «Палец вверх» 👍. 
+              Грабим караваны только на чужих серверах с обязательной галочкой защиты! Сжигать соседей запрещено.
+            </p>
+          </div>
+        </div>
+
+        {onOpenRules && (
+          <button
+            onClick={onOpenRules}
+            className="flex-shrink-0 px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer border border-sky-700 self-stretch sm:self-auto justify-center"
+          >
+            <span>Правила Альянса</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        )}
+      </div>
+
+      {/* Strict Cheese Trap Rules Reminder */}
       <div className="rounded-xl bg-gradient-to-r from-amber-50 via-white to-orange-50 border border-amber-200 p-4 flex items-center justify-between gap-4 flex-wrap shadow-2xs">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-amber-100 border border-amber-200">

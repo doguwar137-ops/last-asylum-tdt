@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Shield, Clock, AlertTriangle, Radio, Flame, Sparkles } from "lucide-react";
+import { Shield, Clock } from "lucide-react";
 import { ALLIANCE_NAME, DUEL_DAYS } from "../data/allianceData";
 
 interface HeaderProps {
@@ -59,9 +59,6 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-lg sm:text-xl tracking-wider text-amber-900 font-mono">
                   {ALLIANCE_NAME}
-                </span>
-                <span className="text-xs px-2 py-0.5 rounded-md bg-rose-50 border border-rose-200 text-rose-700 font-bold tracking-wide flex items-center gap-1">
-                  <Flame className="w-3 h-3 text-rose-600" /> ШТАБ СТРАТЕГА
                 </span>
               </div>
               <p className="text-xs text-slate-500 font-medium">

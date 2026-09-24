@@ -16,14 +16,12 @@ import {
   Compass,
   Copy,
   Check,
-  Ticket,
 } from "lucide-react";
 import { DUEL_DAYS, ALLIANCE_NAME } from "../data/allianceData";
 import { DuelDay } from "../types";
 
 interface WeeklyScheduleProps {
   onSelectDay: (idx: number) => void;
-  promoCodes?: string[];
 }
 
 const getPhaseIcon = (iconName: string) => {
@@ -49,7 +47,6 @@ const getPhaseIcon = (iconName: string) => {
 
 export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
   onSelectDay,
-  promoCodes = [],
 }) => {
   const [expandedDay, setExpandedDay] = useState<string | null>("wednesday");
   const [copiedDayMailId, setCopiedDayMailId] = useState<string | null>(null);
@@ -64,7 +61,7 @@ export const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
   const handleCopyDay = (day: DuelDay) => {
     const text =
       day.exactMailTemplate ||
-      `БОЕВОЙ ПРИКАЗ: ${day.name.toUpperCase()}
+      `${day.name.toUpperCase()}
 ${day.phaseName}
 
 Главные задачи:
@@ -89,15 +86,15 @@ ${day.forbiddenActions.map((f) => `- ${f}`).join("\n")}`;
   };
 
   const handleCopyWeeklyPlan = () => {
-    const planText = `ПЛАН СБРОСА РЕСУРСОВ НА НЕДЕЛЬКУ (ДУЭЛЬ):
+    const planText = `ПЛАН СБРОСА РЕСУРСОВ НА НЕДЕЛЬКУ (ДУЭЛЬ АЛЬЯНСА):
 
-День 1 (Пн): Улучшение Ворона (Активность) — Сдача Сокола. Улучшаем Ворона, проводим штурмы. Копим строительные ускорения!
-День 2 (Вт): Развитие Территории (Строительство) — Стройка (молоток жмем после старта фазы), караваны, выжившие. Копим ускорители исследований и сундуки Ворона!
-День 3 (Ср): Технологические Исследования — Сдача Сокола. Исследования (завершаем после старта), сундуки Ворона. Копим ускорители обучения!
-День 4 (Чт): Рост Героя (Прокачка) — Прокачка UR и SSR героев основного состава, антитоксин. Копим ускорители обучения!
-День 5 (Пт): Подготовка к Войне — Сдача всего накопленного Сокола. Тренировка войск, чужие караваны (обязательно ставим галочку запрета!). Тренируем и забираем солдат для максимального набора очков.
-День 6 (Сб): Рейд на Врага — Караваны UR и операции UR на чужих серверах. Тратим ускорения (стройка, наука, войска, лечение), крушим врагов ради очков.
-День 7 (Вс): Копилка — СТРОГИЙ стоп по всем тратам! Полный режим сбережения ресурсов и ускорителей на новую неделю, отдыхаем.
+День 1 (Пн): Улучшение Ворона (Активность) — Сдача Сокола. Улучшаем Ворона эссенцией, проводим штурмы. Строительные ускорения строго КОПИМ на День 2!
+День 2 (Вт): Развитие Территории (Строительство) — Стройка (молоток жмем строго после старта фазы), ускоры стройки, караваны UR, операции UR. Билеты выживших НЕ тратить (копим на СБ), ускоры науки/войск/лечения КОПИМ!
+День 3 (Ср): Технологические Исследования — Сдача Сокола. Исследования (кнопка завершения после старта), сундуки снаряжения. Ускорители обучения КОПИМ на День 5!
+День 4 (Чт): Рост Героя (Прокачка) — Прокачка UR и SSR героев основы, звезды SR, навыки, найм, антитоксин. Сокола копим! Ускорители обучения КОПИМ на День 5!
+День 5 (Пт): Подготовка к Войне — Финальный массовый сбор Сокола! Тренируем и забираем солдат высшего ранга, грабим чужие караваны (галочка запрета!). На ночь обязательно ставим щит, если нет щита — убираем войска со стен!
+День 6 (Сб): Рейд на Врага (Война Серверов) — Рейд с СБ на ВС по МСК. Караваны UR и операции UR на чужой сервер, крушим врагов, тратим любые ускорения, осколки героев, значки навыков, билеты выживших и призыва! Щит в ночь с ПТ на СБ, нет щита — войска долой со стен!
+День 7 (Вс): Режим Копилки — СТОП тратам! Полный режим сбережения ресурсов и ускорителей. Сокола не забираем. Сбор ресурсов, долгие стройки и наука на ПН.
 
 Важное правило на всю неделю: Универсальные ускорения в ноль не сливаем — оставляем стратегический резерв на случай экстренного лечения войск и защиты базы!`;
     navigator.clipboard.writeText(planText);
@@ -106,7 +103,7 @@ ${day.forbiddenActions.map((f) => `- ${f}`).join("\n")}`;
   };
 
   const handleCopyWeeklyPlanChat = () => {
-    const planText = `Неделя: Пн-Ворон | Вт-Стройка | Ср-Наука | Чт-Герои | Пт-Войска | Сб-Рейд | Вс-Копилка. Ежедневное участие обязательно!`;
+    const planText = `ДУЭЛЬ: ПН-Ворон/Сокол (ускоры стройки копим) | ВТ-Стройка/Караваны (выживших/науку копим) | СР-Наука/Сокол | ЧТ-Герои | ПТ-Войска/Сокол (Щит на ночь!) | СБ-Рейд/Все ускоры/Осколки/Выжившие | ВС-Копилка СТОП тратам!`;
     navigator.clipboard.writeText(planText);
     setCopiedPlanChat(true);
     setTimeout(() => setCopiedPlanChat(false), 2500);
@@ -166,30 +163,6 @@ ${day.forbiddenActions.map((f) => `- ${f}`).join("\n")}`;
           </span>
         </div>
       </div>
-
-      {/* Promo Codes Block (Active) */}
-      {promoCodes.length > 0 && (
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200 p-4 sm:p-5 shadow-2xs">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <Ticket className="w-5 h-5 text-amber-600" />
-              <h3 className="text-sm font-bold text-amber-900 uppercase tracking-wider">
-                Активные Промокоды на этой неделе
-              </h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {promoCodes.map((code) => (
-                <div
-                  key={code}
-                  className="px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-amber-700 font-mono font-bold text-sm shadow-xs flex items-center gap-2"
-                >
-                  {code}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* 7 Days Grid / Accordion */}
       <div className="space-y-3">
@@ -285,15 +258,25 @@ ${day.forbiddenActions.map((f) => `- ${f}`).join("\n")}`;
                   >
                     <div className="font-bold flex items-center gap-2">
                       {isClaimDay ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
                       ) : (
-                        <Lock className="w-4 h-4 text-rose-600" />
+                        <Lock className="w-4 h-4 text-rose-600 flex-shrink-0" />
                       )}
                       <span>ПРАВИЛО СОКОЛА: {day.falconRule.title}</span>
                     </div>
-                    <p className="mt-1 text-xs text-slate-700">
+                    <p className="mt-1 text-xs text-slate-700 leading-relaxed">
                       {day.falconRule.description}
                     </p>
+                    {day.falconRule.warning && (
+                      <p
+                        className={`text-xs font-bold mt-2 flex items-center gap-1.5 ${
+                          isClaimDay ? "text-emerald-700" : "text-rose-700"
+                        }`}
+                      >
+                        <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+                        {day.falconRule.warning}
+                      </p>
+                    )}
                   </div>
 
                   {/* Allowed / Forbidden grid */}
