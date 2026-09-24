@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   CheckSquare,
   Square,
+  HeartPulse,
 } from "lucide-react";
 import { ALLIANCE_NAME, ALLIANCE_LEADERSHIP } from "../data/allianceData";
 
@@ -25,7 +26,6 @@ export const AllianceRules: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [copiedMemo, setCopiedMemo] = useState(false);
   const [copiedRuleId, setCopiedRuleId] = useState<string | null>(null);
-  const [defenseDemoState, setDefenseDemoState] = useState<"on" | "off">("on");
 
   const [showMemoPreview, setShowMemoPreview] = useState(false);
 
@@ -36,7 +36,7 @@ export const AllianceRules: React.FC = () => {
 4. КАРАВАНЫ И СЕКРЕТКИ: грабим ТОЛЬКО чужие серверы! Обязательно галочка «Запретить караваны на этом сервере».
 5. МИР НА СЕРВЕРЕ: сжигать соседей нашего сервера КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО, даже если они вас ограбили!
 6. ЩИТЫ МИРА: всю неделю (с воскресенья по пятницу) щиты НЕ тратим — копим на войну! В субботу (с 05:00 утра субботы до 05:00 воскресенья по МСК) идет рейд вражеских серверов: щит ОБЯЗАТЕЛЕН! Если щита нет — снимайте войска со стен замка!
-7. ОБОРОНА ГОРОДА И «ОСАДА НЕЖИТИ»: Перед стартом события ОБЯЗАТЕЛЬНО верните ВСЕ отряды домой (со сбора ресурсов и со штурмов)! В момент начала все войска должны быть на базе. В меню База -> «Подкрепление» -> «Гарнизон» -> «Настроить оборону города» СТАВИМ галочки ✅ «Присоединиться к обороне», чтобы защищать святилище. В обычное время и перед субботней войной галочки ⬜ ОБЯЗАТЕЛЬНО СНИМАЕМ, чтобы враги не перебили всю армию!`;
+7. ОБОРОНА ГОРОДА И «ОСАДА НЕЖИТИ»: Перед стартом события ОБЯЗАТЕЛЬНО верните ВСЕ отряды домой (со сбора ресурсов и со штурмов)! В момент начала все войска должны быть на базе. В меню База -> «Подкрепление» -> «Гарнизон» -> «Настроить оборону города» СТАВИМ галочки ✅ «Присоединиться к обороне», чтобы защищать святилище. Если крепите союзников — обязательно обновляйте раненые войска (домой на лечение -> обратно в креп)! В обычное время и перед субботней войной галочки ⬜ ОБЯЗАТЕЛЬНО СНИМАЕМ, чтобы враги не перебили всю армию!`;
 
   const handleCopyNewbieMemo = () => {
     navigator.clipboard.writeText(memoText);
@@ -569,7 +569,7 @@ export const AllianceRules: React.FC = () => {
               onClick={() =>
                 handleCopyRule(
                   "ПРАВИЛО АЛЬЯНСА: ОБОРОНА ГОРОДА И ГАЛОЧКИ",
-                  "1. ВЕРНУТЬ ВСЕ ОТРЯДЫ ДОМОЙ: до старта «Осады нежити» обязательно отзовите все войска со сбора ресурсов и из штурмов! Все отряды должны быть на базе!\n2. Как зайти: База на карте -> кнопка «Подкрепление» -> синяя кнопка «Гарнизон» -> меню «Настроить оборону города».\n3. СТАВИМ ГАЛОЧКИ ✅ «Присоединиться к обороне»: ТОЛЬКО во время события «Осада нежити»! Наши отряды защищают и отбивают святилище от волн зомби.\n4. СНИМАЕМ ГАЛОЧКИ ⬜ (пустые квадратики): Во все обычные дни и ОБЯЗАТЕЛЬНО перед субботней войной! Это спасает войска от гибели: если на вас нападет враг, отряды не выйдут на убой на стены, ресурсы в сумке останутся нетронутыми, а все солдаты — живыми!",
+                  "1. ВЕРНУТЬ ВСЕ ОТРЯДЫ ДОМОЙ: до старта «Осады нежити» обязательно отзовите все войска со сбора ресурсов и из штурмов! Все отряды должны быть на базе!\n2. СТАВИМ ГАЛОЧКИ ✅ «Присоединиться к обороне»: ТОЛЬКО во время события «Осада нежити»! Наши отряды защищают базу и отбивают волны монстров.\n3. ОБНОВЛЕНИЕ КРЕПА (ПОДКРЕПЛЕНИЙ): если крепите соклановцев, обязательно обновляйте войско! Отряд принимает удары и ранится: отзовите его домой, вылечите в больнице и пошлите снова (либо сразу отправьте второй свежий отряд)!\n4. СНИМАЕМ ГАЛОЧКИ ⬜ (пустые квадратики): Во все обычные дни и ОБЯЗАТЕЛЬНО перед субботней войной! Это спасает войска от гибели: если на вас нападет враг, отряды не выйдут на убой на стены, ресурсы в сумке останутся нетронутыми, а все солдаты — живыми!",
                   "garrison_copy"
                 )
               }
@@ -589,11 +589,60 @@ export const AllianceRules: React.FC = () => {
             <p className="text-xs sm:text-sm text-amber-900 leading-relaxed">
               Перед стартом события <strong>поставьте все галочки [✅] «Присоединиться к обороне»</strong> (их можно выставить заранее в любой момент) и <strong>ОБЯЗАТЕЛЬНО отзовите все свои отряды со сбора ресурсов на карте и из всех штурмов</strong>. 
               Когда начинается Осада нежити, <strong>все отряды должны находиться дома на базе</strong>! 
-              Если ваш отряд в этот момент собирает ресурсы или находится в походе, он физически не сможет оборонять город и святилище.
+              Если ваш отряд в этот момент собирает ресурсы или находится в походе, он физически не сможет оборонять город.
             </p>
             <div className="p-2.5 rounded-xl bg-white/90 border border-amber-300 text-xs font-semibold text-slate-900 flex items-center gap-2">
               <span className="text-rose-600 font-extrabold text-sm flex-shrink-0">⚠️ АЛГОРИТМ:</span>
-              <span>1. Ставим галочки [✅] во всех отрядах (можно заранее) ➔ 2. Возвращаем все отряды домой на базу ➔ 3. Защищаем святилище ➔ 4. После окончания события снимаем все галочки [⬜]!</span>
+              <span>1. Ставим галочки [✅] во всех отрядах (можно заранее) ➔ 2. Возвращаем все отряды домой на базу ➔ 3. Защищаем замок ➔ 4. После окончания события снимаем все галочки [⬜]!</span>
+            </div>
+          </div>
+
+          {/* REINFORCEMENT & HEALING PRO-TACTIC (КРЕП СОКЛАНОВЦЕВ) */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-50 via-indigo-50 to-slate-50 border-2 border-indigo-300 text-slate-900 space-y-3 shadow-2xs">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-indigo-600 text-white shadow-xs">
+                <HeartPulse className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 border border-indigo-200">
+                  ТАКТИКА ПОДКРЕПЛЕНИЙ (КРЕПА) В ОСАДЕ НЕЖИТИ
+                </span>
+                <h4 className="text-sm sm:text-base font-extrabold text-slate-900 mt-0.5">
+                  Обязательное обновление и лечение войск в подкреплении!
+                </h4>
+              </div>
+            </div>
+            
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+              Если вы <strong>крепите (отправляете подкрепление) кого-то из игроков</strong>, <strong>крайне важно постоянно обновлять войско</strong>.
+              Отряд в чужом замке принимает на себя удары волн монстров, несёт постоянные потери и постепенно тает.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 space-y-1.5">
+                <div className="flex items-center gap-2 text-xs font-bold text-indigo-900">
+                  <span className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-[11px]">1</span>
+                  <span>Вариант А: Отозвать, вылечить и вернуть</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Следите за полоской здоровья отряда. Когда войско ранено — <strong>отзовите отряд домой на базу, вылечите солдат в госпитале/больнице</strong> и отправьте полностью боеспособный отряд обратно в креп.
+                </p>
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 space-y-1.5">
+                <div className="flex items-center gap-2 text-xs font-bold text-indigo-900">
+                  <span className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-[11px]">2</span>
+                  <span>Вариант Б: Отправить второй свежий отряд</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Чтобы замок союзника ни на секунду не остался без защиты — <strong>сначала отправьте соклановцу второй свежий (полный) отряд</strong>, и только после этого отзовите раненый отряд домой на лечение.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-center gap-2 font-medium">
+              <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0" />
+              <span>Если не обновлять войско в подкреплении, разбитый полупустой отряд не удержит следующие сильные волны, и замок соклановца будет пробит!</span>
             </div>
           </div>
 
@@ -666,104 +715,6 @@ export const AllianceRules: React.FC = () => {
                   В меню <strong>«Настроить оборону города»</strong> напротив каждого отряда переключайте <strong>«Присоединиться к обороне»</strong>: галочка [✅] для Осады нежити, пусто [⬜] перед субботой!
                 </p>
               </div>
-            </div>
-          </div>
-
-          {/* Interactive In-Game UI Demonstration (Mirroring Screenshots 4 & 5) */}
-          <div className="rounded-2xl bg-slate-900 text-white p-5 sm:p-6 space-y-4 shadow-lg border border-slate-700">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
-              <div>
-                <span className="text-[10px] font-mono uppercase text-indigo-400 font-bold tracking-wider">
-                  ИНТЕРАКТИВНЫЙ ТРЕНАЖЕР ЭКРАНА ИГРЫ
-                </span>
-                <h4 className="text-base font-bold text-white flex items-center gap-2">
-                  <span>Окно: «Настроить оборону города»</span>
-                </h4>
-              </div>
-
-              {/* Mode Switcher Buttons */}
-              <div className="flex items-center gap-2 bg-slate-800 p-1 rounded-xl border border-slate-700">
-                <button
-                  type="button"
-                  onClick={() => setDefenseDemoState("on")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                    defenseDemoState === "on"
-                      ? "bg-emerald-600 text-white shadow-xs"
-                      : "text-slate-400 hover:text-white"
-                  }`}
-                >
-                  <CheckSquare className="w-3.5 h-3.5" />
-                  <span>Осада нежити (Все ✅)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setDefenseDemoState("off")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                    defenseDemoState === "off"
-                      ? "bg-rose-600 text-white shadow-xs"
-                      : "text-slate-400 hover:text-white"
-                  }`}
-                >
-                  <Square className="w-3.5 h-3.5" />
-                  <span>Суббота / Мир (Все ⬜ сняты)</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Squads List matching Screenshots */}
-            <div className="space-y-2.5">
-              {[
-                { num: 1, name: "Отряд 1", power: "8,608,385" },
-                { num: 2, name: "Отряд 2", power: "5,847,573" },
-                { num: 3, name: "Отряд 3", power: "4,882,753" },
-                { num: 4, name: "Отряд 4", power: "4,120,400" },
-              ].map((squad) => (
-                <div
-                  key={squad.num}
-                  className={`p-3 sm:p-4 rounded-xl border flex items-center justify-between gap-3 transition-all ${
-                    defenseDemoState === "on"
-                      ? "bg-slate-800/90 border-emerald-500/60"
-                      : "bg-slate-800/50 border-slate-700 opacity-80"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-lg bg-slate-700 text-slate-300 font-mono font-bold text-xs flex items-center justify-center">
-                      {squad.num}
-                    </span>
-                    <div>
-                      <div className="text-sm font-bold text-white flex items-center gap-2">
-                        <span>{squad.name}</span>
-                        <span className="text-[11px] font-mono text-amber-400">⚔️ {squad.power}</span>
-                      </div>
-                      <span className="text-[11px] text-slate-400">
-                        {defenseDemoState === "on" ? "🟢 В строю на защите стен и святилища" : "💤 Спит в казарме (в бой на стенах не вступает)"}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-slate-300 hidden sm:inline">
-                      Присоединиться к обороне:
-                    </span>
-                    <div
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-sm border transition-all ${
-                        defenseDemoState === "on"
-                          ? "bg-emerald-500 text-white border-emerald-400 shadow-xs"
-                          : "bg-slate-700 text-slate-500 border-slate-600"
-                      }`}
-                    >
-                      {defenseDemoState === "on" ? <Check className="w-4 h-4 stroke-[3]" /> : null}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-2 text-xs text-slate-300 flex items-center justify-between border-t border-slate-800 font-mono flex-wrap gap-2">
-              <span>Отряды обороны города сразятся с противником в порядке 1-4!</span>
-              <span className={defenseDemoState === "on" ? "text-emerald-400 font-bold" : "text-amber-400 font-bold"}>
-                {defenseDemoState === "on" ? "🛡️ Оборона активна (Осада нежити)" : "⚠️ Оборона отключена — Войска в безопасности!"}
-              </span>
             </div>
           </div>
         </div>
