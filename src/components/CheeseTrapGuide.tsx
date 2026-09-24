@@ -42,7 +42,7 @@ export const CheeseTrapGuide: React.FC = () => {
           </div>
           <div>
             <span className="text-[10px] font-mono font-extrabold uppercase px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-200">
-              СЕКРЕТ МАКСИМАЛЬНЫХ ОЧКОВ
+              СЕКРЕТ МАКСИМАЛЬНЫХ ОЧКОВ • ДЕЙСТВУЕТ 15 МИНУТ
             </span>
             <h3 className="text-base sm:text-lg font-extrabold text-slate-900 mt-0.5">
               Активация «Боевого безумия» перед началом Сырной ловушки
@@ -50,7 +50,7 @@ export const CheeseTrapGuide: React.FC = () => {
           </div>
         </div>
         <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
-          Чтобы набрать значительно больше очков и нанести максимальный урон по боссу, <strong>перед началом события обязательно запустите статус «Боевое безумие»</strong>! 
+          Чтобы набрать значительно больше очков и нанести максимальный урон по боссу, <strong>перед началом события обязательно запустите статус «Боевое безумие» (он активируется ровно на 15 минут)</strong>! 
           Оно дает мощный бонус к атаке ваших отрядов во всех штурмах.
         </p>
         <div className="p-3.5 rounded-xl bg-white/90 border border-rose-200 text-xs text-slate-800 space-y-1.5">
@@ -63,7 +63,7 @@ export const CheeseTrapGuide: React.FC = () => {
             <li>В появившемся меню нажмите кнопку <strong>«Разведчик»</strong>.</li>
           </ol>
           <div className="text-[11px] text-emerald-800 font-bold bg-emerald-50 px-2 py-1 rounded border border-emerald-200 mt-1">
-            ✅ Разведка отправлена — статус Боевого безумия активирован, урон ваших отрядов увеличен!
+            ✅ Разведка отправлена — статус Боевого безумия активирован на 15 минут, урон ваших отрядов увеличен!
           </div>
         </div>
       </div>

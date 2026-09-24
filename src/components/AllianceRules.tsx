@@ -19,6 +19,8 @@ import {
   CheckSquare,
   Square,
   HeartPulse,
+  Clock,
+  Timer,
 } from "lucide-react";
 import { ALLIANCE_NAME, ALLIANCE_LEADERSHIP } from "../data/allianceData";
 
@@ -35,7 +37,7 @@ export const AllianceRules: React.FC = () => {
 3. СОКОЛИНАЯ БАШНЯ: ОБЯЗАТЕЛЬНО отправляйте отряды на задания каждый день до появления КРАСНОГО КРУЖКА 🔴 (красный кружок означает, что задание выполнено). Заранее награды НЕ забираем — копим готовые задания до ПЯТНИЦЫ. В пятницу нажимаем «Забрать все», а если в течение всей пятницы появляются еще задания — обязательно их тоже выполняем и сразу забираем весь день ради очков Дуэли Альянсов!
 4. КАРАВАНЫ И СЕКРЕТКИ: грабим ТОЛЬКО чужие серверы! Обязательно галочка «Запретить караваны на этом сервере».
 5. МИР НА СЕРВЕРЕ: сжигать соседей нашего сервера КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО, даже если они вас ограбили!
-6. ЩИТЫ МИРА: всю неделю (с воскресенья по пятницу) щиты НЕ тратим — копим на войну! В субботу (с 05:00 утра субботы до 05:00 воскресенья по МСК) идет рейд вражеских серверов: щит ОБЯЗАТЕЛЕН! Если щита нет — снимайте войска со стен замка!
+6. ЩИТЫ МИРА И БОЕВОЕ БЕЗУМИЕ: всю неделю (с вс по пт) щиты НЕ тратим — копим на войну! В субботу (с 05:00 сб до 05:00 вс МСК) рейд врагов: щит ОБЯЗАТЕЛЕН на 24ч! Ставьте щит ЗАРАНЕЕ, так как любое военное действие (даже разведка) включает Боевое безумие и запрещает ставить щит 15 минут! Если щита нет — снимайте войска со стен!
 7. ОБОРОНА ГОРОДА И «ОСАДА НЕЖИТИ»: Перед стартом события ОБЯЗАТЕЛЬНО верните ВСЕ отряды домой (со сбора ресурсов и со штурмов)! В момент начала все войска должны быть на базе. В меню База -> «Подкрепление» -> «Гарнизон» -> «Настроить оборону города» СТАВИМ галочки ✅ «Присоединиться к обороне», чтобы защищать святилище. Если крепите союзников — обязательно обновляйте раненые войска (домой на лечение -> обратно в креп)! В обычное время и перед субботней войной галочки ⬜ ОБЯЗАТЕЛЬНО СНИМАЕМ, чтобы враги не перебили всю армию!`;
 
   const handleCopyNewbieMemo = () => {
@@ -506,8 +508,8 @@ export const AllianceRules: React.FC = () => {
             <button
               onClick={() =>
                 handleCopyRule(
-                  "ПРАВИЛО АЛЬЯНСА: РЕЖИМ ЩИТОВ И РЕЙД",
-                  "С воскресенья по пятницу щиты НЕ ставим — экономим и копим их! В субботу с 05:00 до 05:00 воскресенья по МСК идет рейд: щит обязателен на 24 часа. Если щита нет — СНЯТЬ войска со стен!",
+                  "ПРАВИЛО АЛЬЯНСА: РЕЖИМ ЩИТОВ И БОЕВОЕ БЕЗУМИЕ",
+                  "1. ЩИТЫ В БУДНИ: С воскресенья по пятницу щиты НЕ тратим — экономим и копим! Святилище дает 7 щитов по 8ч (ур. 7, 9, 11, 12, 13, 15, 17) + заряжаемый щит на 5 зарядов по 8ч в неделю. В Магазине альянса за монеты альянса всегда можно докупить щиты на 8ч, 12ч и 24ч!\n2. СУББОТА (05:00 - 05:00 ВС МСК): 24-часовой рейд врагов. Ставьте щит ЗАРАНЕЕ! Если щита нет — СНЯТЬ войска со стен (убрать галочки обороны).\n3. ЛОВУШКА БОЕВОГО БЕЗУМИЯ (15 МИН): Любое военное действие (разведка, атака, штурм святилищ/замков, креп, сбор ресурсов) включает Боевое безумие на 15 минут, и щит поставить НЕЛЬЗЯ! Не разведывайте соседей перед включением щита!",
                   "shield_copy"
                 )
               }
@@ -518,6 +520,7 @@ export const AllianceRules: React.FC = () => {
             </button>
           </div>
 
+          {/* Core Saturday vs Weekday Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
               <span className="text-xs font-mono font-bold text-slate-500 uppercase">Воскресенье — Пятница</span>
@@ -527,12 +530,117 @@ export const AllianceRules: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-rose-50 border border-rose-300 space-y-2">
+            <div className="p-4 rounded-2xl bg-rose-50 border-2 border-rose-300 space-y-2">
               <span className="text-xs font-mono font-bold text-rose-700 uppercase">Суббота 05:00 — Воскресенье 05:00 МСК</span>
               <h4 className="text-sm font-extrabold text-rose-950">ЩИТ ОБЯЗАТЕЛЕН НА 24 ЧАСА!</h4>
               <p className="text-xs text-rose-900 leading-relaxed">
                 Со всех серверов прилетают вражеские «киты». Базы без щитов сжигаются за секунды! 
                 <strong> Если щита нет:</strong> <span className="underline font-bold">НЕМЕДЛЕННО СНЯТЬ ВОЙСКА СО СТЕН</span> (убрать гарнизон: снять все галочки «Присоединиться к обороне»), чтобы враги не перебили ваших солдат в лазаретах!
+              </p>
+            </div>
+          </div>
+
+          {/* CRITICAL TRAP: Battle Frenzy (Боевое безумие) */}
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-rose-50 via-orange-50 to-amber-50 border-2 border-rose-400 text-slate-900 space-y-3 shadow-2xs">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-rose-600 text-white shadow-xs">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono font-extrabold uppercase px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300">
+                  КРИТИЧЕСКАЯ ЛОВУШКА ВЫЖИВАНИЯ
+                </span>
+                <h3 className="text-base sm:text-lg font-black text-slate-900 mt-0.5">
+                  Боевое безумие: главная ловушка (15 минут без щита)
+                </h3>
+              </div>
+            </div>
+
+            <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
+              <strong>Любое военное действие мгновенно включает статус «Боевое безумие», и следующие 15 минут игра СТРОГО ЗАПРЕЩАЕТ ставить защитный щит!</strong>
+            </p>
+
+            <div className="p-3.5 rounded-xl bg-white/95 border border-rose-200 text-xs text-slate-800 space-y-2">
+              <div className="font-bold text-rose-950 flex items-center gap-1.5">
+                <span>⚠️ Что игра считает военным действием:</span>
+              </div>
+              <p className="text-slate-700 leading-relaxed font-medium">
+                Военным действием считаются: <strong>разведка, подкрепление, размещение, атака и штурм</strong> (обратите внимание: штурм не на монстров, а на другие святилища и города игроков) — причём на территориях альянса, в лагерях, на точках сбора ресурсов и по городам абсолютно одинаково!
+              </p>
+              <div className="p-2 rounded-lg bg-rose-100/70 border border-rose-300 font-semibold text-rose-950">
+                🚨 <strong>Одна разведка соседа просто из любопытства оставляет ваш город открытым для сожжения на 15 минут!</strong> Ставьте щит всегда <u>заранее</u> до любых военных действий!
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-amber-100/60 border border-amber-300 text-xs text-amber-950 space-y-1">
+              <div className="font-bold flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-amber-700" />
+                <span>Механика игры: реальный таймер и бонус к урону</span>
+              </div>
+              <p className="leading-relaxed">
+                В описании игры написано, что длительность Безумия якобы растёт с уровнем Святилища, однако <strong>на всех уровнях с 1 по 30 она одна и та же и строго равна 15 минутам</strong>.
+                Взамен Боевое безумие даёт бафф <strong>«Атака войска +5%»</strong>, начиная с 9 уровня Святилища.
+              </p>
+            </div>
+          </div>
+
+          {/* SOURCES OF FREE SHIELDS & ALLIANCE SHOP */}
+          <div className="p-5 rounded-2xl bg-gradient-to-r from-purple-50 via-indigo-50 to-slate-50 border-2 border-purple-300 text-slate-900 space-y-3.5 shadow-2xs">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-purple-600 text-white shadow-xs">
+                <Shield className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono font-extrabold uppercase px-2 py-0.5 rounded bg-purple-100 text-purple-800 border border-purple-300">
+                  ЭКОНОМИКА ЩИТОВ И МАГАЗИН АЛЬЯНСА
+                </span>
+                <h3 className="text-base sm:text-lg font-black text-slate-900 mt-0.5">
+                  Как работает щит мира, бесплатные щиты и Магазин альянса
+                </h3>
+              </div>
+            </div>
+
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <strong>Щит закрывает город от любого нападения, пока действует его таймер.</strong> Ставить щит нужно обязательно <strong>заранее</strong>, потому что после любого военного действия игра блокирует установку щита на 15 минут.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div className="p-3.5 bg-white rounded-xl border border-purple-200 space-y-1.5 shadow-2xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-purple-950 flex items-center gap-1.5">
+                    🏛️ 7 щитов по 8 часов от Святилища
+                  </span>
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-800">
+                    Уровни здания
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Святилище бесплатно выдаёт <strong>7 щитов по 8 часов</strong> при достижении уровней: <strong>7, 9, 11, 12, 13, 15 и 17</strong>.
+                </p>
+              </div>
+
+              <div className="p-3.5 bg-white rounded-xl border border-purple-200 space-y-1.5 shadow-2xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-purple-950 flex items-center gap-1.5">
+                    ⚡ 5 бесплатных щитов в неделю
+                  </span>
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800">
+                    Заряжаемый щит
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Отдельно работает <strong>заряжаемый щит на 5 зарядов по 8 часов</strong> с полной перезарядкой в <strong>7 суток</strong> (игроки называют его «5 бесплатных щитов в неделю»).
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-950 space-y-1.5">
+              <div className="font-bold flex items-center gap-2 text-emerald-950 text-sm">
+                <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                <span>Магазин альянса: щиты на 8ч, 12ч и 24ч за монеты альянса</span>
+              </div>
+              <p className="text-emerald-900 leading-relaxed text-xs">
+                Пока действуют бесплатные щиты Святилища, тратить лишние ресурсы незачем. Но если щиты закончились или вам нужен щит на более долгий срок — <strong>в Магазине альянса за заработанные монеты альянса</strong> можно в любой момент купить щиты на <strong>8 часов, 12 часов и 24 часа</strong>!
               </p>
             </div>
           </div>
@@ -569,7 +677,7 @@ export const AllianceRules: React.FC = () => {
               onClick={() =>
                 handleCopyRule(
                   "ПРАВИЛО АЛЬЯНСА: ОБОРОНА ГОРОДА И ГАЛОЧКИ",
-                  "1. ВЕРНУТЬ ВСЕ ОТРЯДЫ ДОМОЙ: до старта «Осады нежити» обязательно отзовите все войска со сбора ресурсов и из штурмов! Все отряды должны быть на базе!\n2. СТАВИМ ГАЛОЧКИ ✅ «Присоединиться к обороне»: ТОЛЬКО во время события «Осада нежити»! Наши отряды защищают базу и отбивают волны монстров.\n3. ОБНОВЛЕНИЕ КРЕПА (ПОДКРЕПЛЕНИЙ): если крепите соклановцев, обязательно обновляйте войско! Отряд принимает удары и ранится: отзовите его домой, вылечите в больнице и пошлите снова (либо сразу отправьте второй свежий отряд)!\n4. СНИМАЕМ ГАЛОЧКИ ⬜ (пустые квадратики): Во все обычные дни и ОБЯЗАТЕЛЬНО перед субботней войной! Это спасает войска от гибели: если на вас нападет враг, отряды не выйдут на убой на стены, ресурсы в сумке останутся нетронутыми, а все солдаты — живыми!",
+                  "1. ВЕРНУТЬ ВСЕ ОТРЯДЫ ДОМОЙ: до старта «Осады нежити» обязательно отзовите все войска со сбора ресурсов и из штурмов! Все отряды должны быть на базе!\n2. СТАВИМ ГАЛОЧКИ ✅ «Присоединиться к обороне»: Во время события «Осада нежити»! Наши отряды защищают базу и отбивают волны монстров.\n3. ОБНОВЛЕНИЕ КРЕПА (ПОДКРЕПЛЕНИЙ): если крепите соклановцев, обязательно обновляйте войско! Отряд принимает удары и ранится: отзовите его домой, вылечите и пошлите снова (либо сразу отправьте второй свежий отряд)!\n4. СНИМАЕМ ГАЛОЧКИ ⬜ (пустые квадратики): Во все обычные дни и ОБЯЗАТЕЛЬНО перед субботней войной! Это спасает войска от гибели: если на вас нападет враг, отряды не выйдут на убой на стены, ресурсы в сумке останутся нетронутыми, а все солдаты — живыми!",
                   "garrison_copy"
                 )
               }
@@ -745,7 +853,7 @@ export const AllianceRules: React.FC = () => {
               onClick={() =>
                 handleCopyRule(
                   "ПРАВИЛО АЛЬЯНСА: СЫРНАЯ ЛОВУШКА",
-                  "0. БОЕВОЕ БЕЗУМИЕ: перед стартом отправьте разведку на игрока без альянса («бомжа») для бонуса к урону!\n1. Штурм запускаем ТОЛЬКО 1 слабым героем (синим/фиолетовым). Основу не ставить!\n2. В штурмы соклановцев вступаем ТОЛЬКО 1-м ударным составом.\n3. Остановка сразу при капе личных наград.",
+                  "0. БОЕВОЕ БЕЗУМИЕ (на 15 мин): перед стартом отправьте разведку на игрока без альянса («бомжа») для бонуса к урону!\n1. Штурм запускаем ТОЛЬКО 1 слабым героем (синим/фиолетовым). Основу не ставить!\n2. В штурмы соклановцев вступаем ТОЛЬКО 1-м ударным составом.\n3. Остановка сразу при капе личных наград.",
                   "cheese_copy"
                 )
               }
@@ -758,10 +866,10 @@ export const AllianceRules: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="rounded-2xl bg-rose-50/80 border border-rose-200 p-4 space-y-1.5">
-              <span className="text-xs font-mono font-bold text-rose-700">0. Боевое безумие</span>
+              <span className="text-xs font-mono font-bold text-rose-700">0. Боевое безумие (15 мин)</span>
               <h4 className="text-sm font-bold text-slate-900">Разведка на «бомжа»</h4>
               <p className="text-xs text-slate-700 leading-relaxed">
-                Перед стартом найдите на карте игрока без альянса («бомжа»), нажмите на его домик и выберите <strong>«Разведчик»</strong> — это активирует бафф «Боевое безумие» для максимума очков!
+                Перед стартом найдите на карте игрока без альянса («бомжа»), нажмите на его домик и выберите <strong>«Разведчик»</strong> — это активирует бафф «Боевое безумие» на <strong>15 минут</strong> для максимума очков!
               </p>
             </div>
 
