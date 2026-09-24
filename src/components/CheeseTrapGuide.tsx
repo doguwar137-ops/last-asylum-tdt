@@ -34,6 +34,40 @@ export const CheeseTrapGuide: React.FC = () => {
         </div>
       </div>
 
+      {/* Battle Frenzy Pro-Secret Banner */}
+      <div className="rounded-2xl bg-gradient-to-r from-rose-50 via-orange-50 to-amber-50 border-2 border-rose-300 p-5 sm:p-6 shadow-2xs space-y-3">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 rounded-xl bg-rose-600 text-white shadow-xs">
+            <Flame className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[10px] font-mono font-extrabold uppercase px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-200">
+              СЕКРЕТ МАКСИМАЛЬНЫХ ОЧКОВ
+            </span>
+            <h3 className="text-base sm:text-lg font-extrabold text-slate-900 mt-0.5">
+              Активация «Боевого безумия» перед началом Сырной ловушки
+            </h3>
+          </div>
+        </div>
+        <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
+          Чтобы набрать значительно больше очков и нанести максимальный урон по боссу, <strong>перед началом события обязательно запустите статус «Боевое безумие»</strong>! 
+          Оно дает мощный бонус к атаке ваших отрядов во всех штурмах.
+        </p>
+        <div className="p-3.5 rounded-xl bg-white/90 border border-rose-200 text-xs text-slate-800 space-y-1.5">
+          <div className="font-bold text-rose-900 flex items-center gap-1.5">
+            <span>🎯 Как активировать Боевое безумие за 5 секунд:</span>
+          </div>
+          <ol className="list-decimal list-inside space-y-1 text-slate-700 pl-1 font-medium">
+            <li>Найдите на карте любого игрока без альянса («бомжа»).</li>
+            <li>Нажмите на его замок (домик).</li>
+            <li>В появившемся меню нажмите кнопку <strong>«Разведчик»</strong>.</li>
+          </ol>
+          <div className="text-[11px] text-emerald-800 font-bold bg-emerald-50 px-2 py-1 rounded border border-emerald-200 mt-1">
+            ✅ Разведка отправлена — статус Боевого безумия активирован, урон ваших отрядов увеличен!
+          </div>
+        </div>
+      </div>
+
       {/* 4 Golden Rules Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Rule 1: Launching Assault */}

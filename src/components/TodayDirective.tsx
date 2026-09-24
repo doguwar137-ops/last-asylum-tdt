@@ -322,58 +322,23 @@ ${currentDay.phaseName}
           </div>
         )}
 
-        {/* Points Opportunities & Pro Tips */}
-        <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2 rounded-xl bg-slate-50 border border-slate-200 p-4 shadow-2xs">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1.5 mb-3">
-              <Zap className="w-4 h-4 text-amber-600" />
-              Где брать очки сегодня:
+        {/* Pro Tips / Tactical Guidance */}
+        {currentDay.tips && currentDay.tips.length > 0 && (
+          <div className="mt-5 rounded-xl bg-slate-50 border border-slate-200 p-4 shadow-2xs">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5 mb-3">
+              <Info className="w-4 h-4 text-amber-600" />
+              Тактические советы на сегодня:
             </h4>
-            <div className="space-y-2.5">
-              {currentDay.pointsOpportunities.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center justify-between p-2.5 rounded-lg bg-white border border-slate-200 text-xs shadow-2xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                        item.priority === "CRITICAL"
-                          ? "bg-rose-100 text-rose-800 border border-rose-200"
-                          : item.priority === "HIGH"
-                          ? "bg-amber-100 text-amber-800 border border-amber-200"
-                          : "bg-slate-100 text-slate-700 border border-slate-200"
-                      }`}
-                    >
-                      {item.priority === "CRITICAL" ? "ТОП" : item.priority}
-                    </span>
-                    <span className="text-slate-800 font-medium">{item.activity}</span>
-                  </div>
-                  <span className="font-mono font-bold text-amber-700">
-                    {item.pointsEstimate}
-                  </span>
-                </div>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              {currentDay.tips.map((tip, i) => (
+                <li key={i} className="text-xs text-slate-700 leading-relaxed flex items-start gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                  <span className="text-amber-600 font-bold mt-0.5">•</span>
+                  <span>{tip}</span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-
-          <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 flex flex-col justify-between shadow-2xs">
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5 mb-3">
-                <Info className="w-4 h-4 text-slate-500" />
-                Тактический совет:
-              </h4>
-              <ul className="space-y-2">
-                {currentDay.tips.map((tip, i) => (
-                  <li key={i} className="text-xs text-slate-700 leading-relaxed flex items-start gap-1.5">
-                    <span className="text-amber-600 font-bold">•</span>
-                    <span>{tip}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Mandatory Tech Donation & Server Policy Banner */}
