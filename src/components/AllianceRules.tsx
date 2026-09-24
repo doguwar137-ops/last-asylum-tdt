@@ -14,7 +14,10 @@ import {
   Eye,
   Award,
   Crown,
-  Compass
+  Compass,
+  ShieldCheck,
+  CheckSquare,
+  Square,
 } from "lucide-react";
 import { ALLIANCE_NAME, ALLIANCE_LEADERSHIP } from "../data/allianceData";
 
@@ -22,6 +25,7 @@ export const AllianceRules: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [copiedMemo, setCopiedMemo] = useState(false);
   const [copiedRuleId, setCopiedRuleId] = useState<string | null>(null);
+  const [defenseDemoState, setDefenseDemoState] = useState<"on" | "off">("on");
 
   const [showMemoPreview, setShowMemoPreview] = useState(false);
 
@@ -31,7 +35,8 @@ export const AllianceRules: React.FC = () => {
 3. СОКОЛИНАЯ БАШНЯ: ОБЯЗАТЕЛЬНО отправляйте отряды на задания каждый день до появления КРАСНОГО КРУЖКА 🔴 (красный кружок означает, что задание выполнено). Заранее награды НЕ забираем — копим готовые задания до ПЯТНИЦЫ. В пятницу нажимаем «Забрать все», а если в течение всей пятницы появляются еще задания — обязательно их тоже выполняем и сразу забираем весь день ради очков Дуэли Альянсов!
 4. КАРАВАНЫ И СЕКРЕТКИ: грабим ТОЛЬКО чужие серверы! Обязательно галочка «Запретить караваны на этом сервере».
 5. МИР НА СЕРВЕРЕ: сжигать соседей нашего сервера КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО, даже если они вас ограбили!
-6. ЩИТЫ МИРА: всю неделю (с воскресенья по пятницу) щиты НЕ тратим — копим на войну! В субботу (с 05:00 утра субботы до 05:00 воскресенья по МСК) идет рейд вражеских серверов: щит ОБЯЗАТЕЛЕН! Если щита нет — снимайте войска со стен замка!`;
+6. ЩИТЫ МИРА: всю неделю (с воскресенья по пятницу) щиты НЕ тратим — копим на войну! В субботу (с 05:00 утра субботы до 05:00 воскресенья по МСК) идет рейд вражеских серверов: щит ОБЯЗАТЕЛЕН! Если щита нет — снимайте войска со стен замка!
+7. ОБОРОНА ГОРОДА И ГАЛОЧКИ: База -> «Подкрепление» -> «Гарнизон» -> «Настроить оборону города». Галочки ✅ «Присоединиться к обороне» СТАВИМ только во время «Осады нежити» (чтобы отбивать святилище). В обычное время и перед субботней войной галочки ⬜ ОБЯЗАТЕЛЬНО СНИМАЕМ, чтобы враги не перебили всю армию!`;
 
   const handleCopyNewbieMemo = () => {
     navigator.clipboard.writeText(memoText);
@@ -192,6 +197,7 @@ export const AllianceRules: React.FC = () => {
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
         {[
           { id: "all", label: "Все Правила" },
+          { id: "garrison", label: "🛡️ Оборона и Галочки", badge: "ВАЖНО" },
           { id: "falcon", label: "🦅 Соколиная Башня (🔴 Кружок)", badge: "ВАЖНО" },
           { id: "donations", label: "🧪 Взносы в науку (👍)", badge: "ОБЯЗАТЕЛЬНО" },
           { id: "duel", label: "⚔️ Дуэль 2.000.000", badge: "НОРМАТИВ" },
@@ -526,8 +532,222 @@ export const AllianceRules: React.FC = () => {
               <h4 className="text-sm font-extrabold text-rose-950">ЩИТ ОБЯЗАТЕЛЕН НА 24 ЧАСА!</h4>
               <p className="text-xs text-rose-900 leading-relaxed">
                 Со всех серверов прилетают вражеские «киты». Базы без щитов сжигаются за секунды! 
-                <strong> Если щита нет:</strong> <span className="underline font-bold">НЕМЕДЛЕННО СНЯТЬ ВОЙСКА СО СТЕН</span> (убрать гарнизон), чтобы не потерять солдат в лазаретах!
+                <strong> Если щита нет:</strong> <span className="underline font-bold">НЕМЕДЛЕННО СНЯТЬ ВОЙСКА СО СТЕН</span> (убрать гарнизон: снять все галочки «Присоединиться к обороне»), чтобы враги не перебили ваших солдат в лазаретах!
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SECTION: Defense Squads & Garrison Checkmarks (Защита святилища, Осада нежити vs Война) */}
+      {(activeFilter === "all" || activeFilter === "garrison") && (
+        <div id="rule-garrison" className="rounded-3xl bg-white border-2 border-indigo-500 p-6 sm:p-7 shadow-sm space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 rounded-2xl bg-indigo-100 text-indigo-700">
+                <ShieldCheck className="w-6 h-6 text-indigo-600" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[11px] font-mono font-extrabold px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 border border-indigo-300">
+                    БОЕВОЙ РЕГЛАМЕНТ • ОБОРОНА ГОРОДА И СВЯТИЛИЩА
+                  </span>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-500 text-white font-mono flex items-center gap-1 shadow-2xs">
+                    ✅ ОСАДА НЕЖИТИ: ГАЛОЧКИ СТАВИМ
+                  </span>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-rose-500 text-white font-mono flex items-center gap-1 shadow-2xs">
+                    ⬜ СУББОТА / МИР: ГАЛОЧКИ СНИМАЕМ
+                  </span>
+                </div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+                  Защита Святилища и Гарнизон: Настройка Обороны Города (Галочки)
+                </h2>
+              </div>
+            </div>
+
+            <button
+              onClick={() =>
+                handleCopyRule(
+                  "ПРАВИЛО АЛЬЯНСА: ОБОРОНА ГОРОДА И ГАЛОЧКИ",
+                  "1. Как зайти: База на карте -> кнопка «Подкрепление» -> синяя кнопка «Гарнизон» -> меню «Настроить оборону города».\n2. СТАВИМ ГАЛОЧКИ ✅ «Присоединиться к обороне»: ТОЛЬКО во время события «Осада нежити»! Наши отряды защищают и отбивают святилище от волн зомби.\n3. СНИМАЕМ ГАЛОЧКИ ⬜ (пустые квадратики): Во все обычные дни и ОБЯЗАТЕЛЬНО перед субботней войной! Это спасает войска от гибели: если на вас нападет враг, отряды не выйдут на убой на стены, и солдаты останутся живыми!",
+                  "garrison_copy"
+                )
+              }
+              className="self-start sm:self-center px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              {copiedRuleId === "garrison_copy" ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+              <span>Скопировать правило</span>
+            </button>
+          </div>
+
+          {/* Core Contrast: When ON vs When OFF */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 rounded-2xl bg-emerald-50/80 border-2 border-emerald-300 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-extrabold px-2.5 py-1 rounded-md bg-emerald-600 text-white flex items-center gap-1.5">
+                  <CheckSquare className="w-3.5 h-3.5" /> ГАЛОЧКИ СТАВИМ [✅]
+                </span>
+                <span className="text-xs font-bold text-emerald-800">СОБЫТИЕ «ОСАДА НЕЖИТИ»</span>
+              </div>
+              <h4 className="text-sm font-bold text-emerald-950">Защищаем и отбиваем святилище</h4>
+              <p className="text-xs text-emerald-900 leading-relaxed">
+                Когда запускается событие <strong>«Осада нежити»</strong> или идет оборона святилища от орд зомби, 
+                мы <strong>ОБЯЗАТЕЛЬНО ставим все 4 галочки</strong> напротив каждого отряда! 
+                Наши солдаты выходят на защиту, отбивают атаки нежити, спасают святилище и забирают топовые сундуки наград.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-rose-50/80 border-2 border-rose-300 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-extrabold px-2.5 py-1 rounded-md bg-rose-600 text-white flex items-center gap-1.5">
+                  <Square className="w-3.5 h-3.5" /> ГАЛОЧКИ СНИМАЕМ [⬜]
+                </span>
+                <span className="text-xs font-bold text-rose-800">ВОЙНА В СУББОТУ И МИРНЫЕ ДНИ</span>
+              </div>
+              <h4 className="text-sm font-bold text-rose-950">Спасаем армию от уничтожения</h4>
+              <p className="text-xs text-rose-900 leading-relaxed">
+                <strong>СНИМАЕМ галочки во всё обычное время и СТРОГО перед Субботой (Войной серверов)!</strong> 
+                Если на базу без щита нападет сильный игрок, отряды на стенах будут намертво перебиты, а армия уничтожена. 
+                Со <strong>снятыми галочками</strong> отряды не вступают в бой на стенах, враг заберет лишь крохи ресурсов, а <strong>все ваши солдаты останутся живыми</strong>!
+              </p>
+            </div>
+          </div>
+
+          {/* 4 Step Visual Guide */}
+          <div>
+            <h4 className="text-xs font-mono font-extrabold uppercase tracking-wider text-slate-500 mb-3">
+              Пошаговая инструкция настройки в игре (по скриншотам):
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">ШАГ 1</span>
+                <h5 className="text-sm font-bold text-slate-900">Клик по своей базе</h5>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Нажмите на свой замок на карте мира (или на замок соклановца для отправки подкрепления).
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">ШАГ 2</span>
+                <h5 className="text-sm font-bold text-slate-900">Кнопка «Подкрепление»</h5>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  В появившемся круговом меню действий нажмите круглую кнопку <strong>«Подкрепление»</strong> (человечек со щитом).
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">ШАГ 3</span>
+                <h5 className="text-sm font-bold text-slate-900">Синяя кнопка «Гарнизон»</h5>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  В открывшемся окне гарнизона нажмите большую синюю кнопку <strong>«Гарнизон»</strong> в самом низу окна.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">ШАГ 4</span>
+                <h5 className="text-sm font-bold text-slate-900">Управление галочками</h5>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  В меню <strong>«Настроить оборону города»</strong> напротив каждого отряда переключайте <strong>«Присоединиться к обороне»</strong>: галочка [✅] для Осады нежити, пусто [⬜] перед субботой!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Interactive In-Game UI Demonstration (Mirroring Screenshots 4 & 5) */}
+          <div className="rounded-2xl bg-slate-900 text-white p-5 sm:p-6 space-y-4 shadow-lg border border-slate-700">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+              <div>
+                <span className="text-[10px] font-mono uppercase text-indigo-400 font-bold tracking-wider">
+                  ИНТЕРАКТИВНЫЙ ТРЕНАЖЕР ЭКРАНА ИГРЫ
+                </span>
+                <h4 className="text-base font-bold text-white flex items-center gap-2">
+                  <span>Окно: «Настроить оборону города»</span>
+                </h4>
+              </div>
+
+              {/* Mode Switcher Buttons */}
+              <div className="flex items-center gap-2 bg-slate-800 p-1 rounded-xl border border-slate-700">
+                <button
+                  type="button"
+                  onClick={() => setDefenseDemoState("on")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                    defenseDemoState === "on"
+                      ? "bg-emerald-600 text-white shadow-xs"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  <CheckSquare className="w-3.5 h-3.5" />
+                  <span>Осада нежити (Все ✅)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDefenseDemoState("off")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                    defenseDemoState === "off"
+                      ? "bg-rose-600 text-white shadow-xs"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  <Square className="w-3.5 h-3.5" />
+                  <span>Суббота / Мир (Все ⬜ сняты)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Squads List matching Screenshots */}
+            <div className="space-y-2.5">
+              {[
+                { num: 1, name: "Отряд 1", power: "8,608,385" },
+                { num: 2, name: "Отряд 2", power: "5,847,573" },
+                { num: 3, name: "Отряд 3", power: "4,882,753" },
+                { num: 4, name: "Отряд 4", power: "4,120,400" },
+              ].map((squad) => (
+                <div
+                  key={squad.num}
+                  className={`p-3 sm:p-4 rounded-xl border flex items-center justify-between gap-3 transition-all ${
+                    defenseDemoState === "on"
+                      ? "bg-slate-800/90 border-emerald-500/60"
+                      : "bg-slate-800/50 border-slate-700 opacity-80"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="w-6 h-6 rounded-lg bg-slate-700 text-slate-300 font-mono font-bold text-xs flex items-center justify-center">
+                      {squad.num}
+                    </span>
+                    <div>
+                      <div className="text-sm font-bold text-white flex items-center gap-2">
+                        <span>{squad.name}</span>
+                        <span className="text-[11px] font-mono text-amber-400">⚔️ {squad.power}</span>
+                      </div>
+                      <span className="text-[11px] text-slate-400">
+                        {defenseDemoState === "on" ? "🟢 В строю на защите стен и святилища" : "💤 Спит в казарме (в бой на стенах не вступает)"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono text-slate-300 hidden sm:inline">
+                      Присоединиться к обороне:
+                    </span>
+                    <div
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-sm border transition-all ${
+                        defenseDemoState === "on"
+                          ? "bg-emerald-500 text-white border-emerald-400 shadow-xs"
+                          : "bg-slate-700 text-slate-500 border-slate-600"
+                      }`}
+                    >
+                      {defenseDemoState === "on" ? <Check className="w-4 h-4 stroke-[3]" /> : null}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-2 text-xs text-slate-300 flex items-center justify-between border-t border-slate-800 font-mono flex-wrap gap-2">
+              <span>Отряды обороны города сразятся с противником в порядке 1-4!</span>
+              <span className={defenseDemoState === "on" ? "text-emerald-400 font-bold" : "text-amber-400 font-bold"}>
+                {defenseDemoState === "on" ? "🛡️ Оборона активна (Осада нежити)" : "⚠️ Оборона отключена — Войска в безопасности!"}
+              </span>
             </div>
           </div>
         </div>
@@ -549,7 +769,7 @@ export const AllianceRules: React.FC = () => {
                   <span className="text-xs text-emerald-700 font-bold">СОХРАНЕНИЕ ВОЙСК</span>
                 </div>
                 <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
-                  Стратегия «Сырной Ловушки» и Правила Сборов
+                  Стратегия «Сырной Ловушки» и Правила Штурмов
                 </h2>
               </div>
             </div>
@@ -558,7 +778,7 @@ export const AllianceRules: React.FC = () => {
               onClick={() =>
                 handleCopyRule(
                   "ПРАВИЛО АЛЬЯНСА: СЫРНАЯ ЛОВУШКА",
-                  "1. Сбор создаем ТОЛЬКО 1 слабым героем (синим/фиолетовым). Основу не ставить! 2. В штурмы сокланов вступаем ТОЛЬКО 1-м ударным составом. 3. Остановка сразу при капе личных наград.",
+                  "1. Штурм запускаем ТОЛЬКО 1 слабым героем (синим/фиолетовым). Основу не ставить! 2. В штурмы соклановцев вступаем ТОЛЬКО 1-м ударным составом. 3. Остановка сразу при капе личных наград.",
                   "cheese_copy"
                 )
               }
@@ -571,10 +791,10 @@ export const AllianceRules: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4 space-y-1.5">
-              <span className="text-xs font-mono font-bold text-rose-700">1. Запуск сбора</span>
+              <span className="text-xs font-mono font-bold text-rose-700">1. Запуск штурма</span>
               <h4 className="text-sm font-bold text-slate-900">Только 1 слабый герой</h4>
               <p className="text-xs text-slate-600">
-                Запускайте сбор синим или фиолетовым героем 1 уровня. Ни в коем случае не основой — вы займете место урона для соклановцев!
+                Запускайте штурм синим или фиолетовым героем 1 уровня. Ни в коем случае не основой — вы займете место урона для соклановцев!
               </p>
             </div>
 
@@ -582,7 +802,7 @@ export const AllianceRules: React.FC = () => {
               <span className="text-xs font-mono font-bold text-emerald-700">2. Вход в штурмы</span>
               <h4 className="text-sm font-bold text-slate-900">Только 1-й боевой состав</h4>
               <p className="text-xs text-slate-600">
-                Присоединяйтесь к сборам союзников своим самым сильным отрядом с максимальным уроном для ускорения победы.
+                Присоединяйтесь к штурмам союзников своим самым сильным отрядом с максимальным уроном для ускорения победы.
               </p>
             </div>
 
